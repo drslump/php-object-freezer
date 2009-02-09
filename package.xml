@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.10" version="2.0"
+  xmlns="http://pear.php.net/dtd/package-2.0"
+  xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+                      http://pear.php.net/dtd/tasks-1.0.xsd
+                      http://pear.php.net/dtd/package-2.0
+                      http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Object_Freezer</name>
+ <channel>pear.phpunit.de</channel>
+ <summary>Library that faciliates PHP object stores.</summary>
+ <description>Library that provides the low-level functionality required to store ("freeze") PHP objects to and fetch ("thaw") PHP objects from an object store.</description>
+ <lead>
+  <name>Sebastian Bergmann</name>
+  <user>sb</user>
+  <email>sb@sebastian-bergmann.de</email>
+  <active>yes</active>
+ </lead>
+ <date>2009-MM-DD</date>
+ <version>
+  <release>1.0.0</release>
+  <api>1.0.0</api>
+ </version>
+ <stability>
+  <release>devel</release>
+  <api>devel</api>
+ </stability>
+ <license>BSD License</license>
+ <notes>http://github.com/sebastianbergmann/php-object-freezer/</notes>
+ <contents>
+  <dir name="/">
+   <dir name="Object">
+    <dir name="Freezer">
+     <dir name="HashGenerator">
+      <file baseinstalldir="/" name="NonRecursiveSHA1.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+     </dir>
+     <dir name="IdGenerator">
+      <file baseinstalldir="/" name="UUID.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+     </dir>
+     <dir name="Storage">
+      <file baseinstalldir="/" name="CouchDB.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+     </dir>
+     <file baseinstalldir="/" name="HashGenerator.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="/" name="IdGenerator.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="/" name="Storage.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="/" name="Util.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+    </dir>
+    <file baseinstalldir="/" name="Freezer.php" role="php">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+   </dir>
+   <dir name="Tests">
+    <dir name="Object">
+     <dir name="_files">
+      <file baseinstalldir="/" name="A.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="/" name="B.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="/" name="C.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="/" name="D.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="/" name="E.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="/" name="ConstructorCounter.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="/" name="Node.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+     </dir>
+     <dir name="Freezer">
+      <dir name="HashGenerator">
+       <file baseinstalldir="/" name="NonRecursiveSHA1Test.php" role="test">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
+      </dir>
+      <dir name="IdGenerator">
+       <file baseinstalldir="/" name="UUIDTest.php" role="test">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
+      </dir>
+      <dir name="Storage">
+       <file baseinstalldir="/" name="CouchDBTest.php" role="test">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
+      </dir>
+      <file baseinstalldir="/" name="StorageTest.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="/" name="UtilTest.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+     </dir>
+     <file baseinstalldir="/" name="FreezerTest.php" role="test">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+    </dir>
+   </dir>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.3.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease/>
+</package>

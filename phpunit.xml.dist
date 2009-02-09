@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         syntaxCheck="false">
+  <php>
+    <const name="OBJECT_FREEZER_COUCHDB_HOST" value="localhost"/>
+    <const name="OBJECT_FREEZER_COUCHDB_PORT" value="5984"/>
+  </php>
+  <filter>
+    <whitelist addUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">Object</directory>
+       <exclude>
+         <file>Object/Freezer/HashGenerator.php</file>
+         <file>Object/Freezer/IdGenerator.php</file>
+       </exclude>
+    </whitelist>
+  </filter>
+</phpunit>

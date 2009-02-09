@@ -54,7 +54,7 @@ require_once 'Object/Freezer/IdGenerator/UUID.php';
  * @copyright  2008-2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       https://launchpad.net/php-object-freezer/
+ * @link       http://github.com/sebastianbergmann/php-object-freezer/
  * @since      Class available since Release 1.0.0
  */
 class Object_Freezer_IdGenerator_UUIDTest extends PHPUnit_Framework_TestCase

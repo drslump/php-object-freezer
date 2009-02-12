@@ -184,10 +184,10 @@ class Object_Freezer
      *
      * The reference to the object of class B that the object of class A had
      * before it was frozen has been replaced with the UUID of the frozen
-     * object of class B (7ff52a70-80c9-410d-bc32-42551cf685a6).
+     * object of class B (__php_object_freezer_3cd682bf-8eba-4fec-90e2-ebe98aa07ab7).
      *
      * The result array's "root" element contains the UUID for the now frozen
-     * object of class A (7dc80259-e900-4c12-8d22-a396e2691755).
+     * object of class A (32246c35-f47b-4fbc-a2ad-ed14e520865e).
      *
      * @param  object  $object  The object that is to be frozen.
      * @param  array   $objects Only used internally.

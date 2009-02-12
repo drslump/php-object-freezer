@@ -83,7 +83,8 @@ abstract class Object_Freezer_Storage
     /**
      * Freezes an object and stores it in the object storage.
      *
-     * @param object $object The object that is to be stored.
+     * @param  object $object The object that is to be stored.
+     * @return string
      */
     public function store($object)
     {
@@ -92,7 +93,7 @@ abstract class Object_Freezer_Storage
             throw Object_Freezer_Util::getInvalidArgumentException(1, 'object');
         }
 
-        $this->doStore($object);
+        return $this->doStore($object);
     }
 
     /**
@@ -118,7 +119,8 @@ abstract class Object_Freezer_Storage
     /**
      * Freezes an object and stores it in the object storage.
      *
-     * @param object $object The object that is to be stored.
+     * @param  object $object The object that is to be stored.
+     * @return string
      */
     abstract protected function doStore($object);
 

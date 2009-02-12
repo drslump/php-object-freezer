@@ -276,6 +276,7 @@ class Object_Freezer
      * Thaws an object.
      *
      * <code>
+     * <?php
      * require_once 'Object/Freezer.php';
      *
      * require_once 'A.php';
@@ -306,7 +307,10 @@ class Object_Freezer
      *     )
      *   )
      * );
+     * ?>
      * </code>
+     *
+     * Below is the output of the code example above.
      *
      * <code>
      * object(A)#3 (2) {

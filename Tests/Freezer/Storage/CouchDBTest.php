@@ -421,9 +421,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     /**
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
+     * @covers  Object_Freezer_Storage::fetchArray
      * @covers  Object_Freezer_Storage_CouchDB::doStore
      * @covers  Object_Freezer_Storage_CouchDB::doFetch
-     * @covers  Object_Freezer_Storage_CouchDB::fetchArray
      * @depends testStoringAnObjectThatAggregatesOtherObjectsInAnArrayWorks
      */
     public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsInAnArrayWorks()
@@ -437,9 +437,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     /**
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
+     * @covers  Object_Freezer_Storage::fetchArray
      * @covers  Object_Freezer_Storage_CouchDB::doStore
      * @covers  Object_Freezer_Storage_CouchDB::doFetch
-     * @covers  Object_Freezer_Storage_CouchDB::fetchArray
      * @depends testStoringAnObjectThatAggregatesOtherObjectsInANestedArrayWorks
      */
     public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsInANestedArrayWorks()
@@ -473,9 +473,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     /**
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
+     * @covers  Object_Freezer_Storage::fetchArray
      * @covers  Object_Freezer_Storage_CouchDB::doStore
      * @covers  Object_Freezer_Storage_CouchDB::doFetch
-     * @covers  Object_Freezer_Storage_CouchDB::fetchArray
      * @depends testStoringAndFetchingAnObjectGraphThatContainsCyclesWorks
      */
     public function testStoringAndFetchingAnObjectGraphThatContainsCyclesWorks2()

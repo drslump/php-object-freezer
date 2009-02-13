@@ -185,28 +185,6 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
     }
 
     /**
-     * 
-     *
-     * @param  array  $array
-     * @param  array  $objects
-     */
-    protected function fetchArray(array $array, array &$objects = array())
-    {
-        foreach ($array as $value) {
-            if (is_array($value)) {
-                $this->fetchArray($value, $objects);
-            }
-
-            else if (is_string($value) &&
-                     strpos($value, '__php_object_freezer_') === 0) {
-                $this->doFetch(
-                  str_replace('__php_object_freezer_', '', $value), $objects
-                );
-            }
-        }
-    }
-
-    /**
      * Sends an HTTP request to the CouchDB server.
      *
      * @param  string $method

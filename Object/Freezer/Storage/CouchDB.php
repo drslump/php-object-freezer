@@ -44,7 +44,7 @@
 require_once 'Object/Freezer/Storage.php';
 
 /**
- * CouchDB object storage.
+ * Object storage that uses Apache CouchDB as its backend.
  *
  * @package    Object_Freezer
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>

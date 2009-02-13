@@ -369,12 +369,12 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Object_Freezer_Storage::store
-     * @covers Object_Freezer_Storage::fetch
-     * @covers Object_Freezer_Storage_CouchDB::doStore
-     * @covers Object_Freezer_Storage_CouchDB::doFetch
-     * @covers Object_Freezer_Storage_CouchDB::send
-     * @depend testStoringAnObjectWorks
+     * @covers  Object_Freezer_Storage::store
+     * @covers  Object_Freezer_Storage::fetch
+     * @covers  Object_Freezer_Storage_CouchDB::doStore
+     * @covers  Object_Freezer_Storage_CouchDB::doFetch
+     * @covers  Object_Freezer_Storage_CouchDB::send
+     * @depends testStoringAnObjectWorks
      */
     public function testStoringAndFetchingAnObjectWorks()
     {
@@ -385,12 +385,12 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Object_Freezer_Storage::store
-     * @covers Object_Freezer_Storage::fetch
-     * @covers Object_Freezer_Storage_CouchDB::doStore
-     * @covers Object_Freezer_Storage_CouchDB::doFetch
-     * @covers Object_Freezer_Storage_CouchDB::send
-     * @depend testStoringAnObjectWorks
+     * @covers  Object_Freezer_Storage::store
+     * @covers  Object_Freezer_Storage::fetch
+     * @covers  Object_Freezer_Storage_CouchDB::doStore
+     * @covers  Object_Freezer_Storage_CouchDB::doFetch
+     * @covers  Object_Freezer_Storage_CouchDB::send
+     * @depends testStoringAnObjectWorks
      */
     public function testStoringAndFetchingAnObjectWorks2()
     {

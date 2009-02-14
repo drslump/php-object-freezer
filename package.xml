@@ -53,6 +53,9 @@
      <file baseinstalldir="/" name="IdGenerator.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
+     <file baseinstalldir="/" name="LazyProxy.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
      <file baseinstalldir="/" name="Storage.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>

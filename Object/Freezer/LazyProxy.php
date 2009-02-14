@@ -77,7 +77,11 @@ class Object_Freezer_LazyProxy
     }
 
     /**
-     * @param string $name
+     * Replaces the lazy proxy object with the real object and
+     * delegates the attribute read access to it.
+     *
+     * @param  string $name
+     * @return mixed
      */
     public function __get($name)
     {
@@ -89,6 +93,9 @@ class Object_Freezer_LazyProxy
     }
 
     /**
+     * Replaces the lazy proxy object with the real object and
+     * delegates the attribute write access to it.
+     *
      * @param string $name
      * @param mixed  $value
      */
@@ -102,8 +109,12 @@ class Object_Freezer_LazyProxy
     }
 
     /**
-     * @param string $name
-     * @param array  $arguments
+     * Replaces the lazy proxy object with the real object and
+     * delegates the message to it.
+     *
+     * @param  string $name
+     * @param  array  $arguments
+     * @return mixed
      */
     public function __call($name, $arguments)
     {

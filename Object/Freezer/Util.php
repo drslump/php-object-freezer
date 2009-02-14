@@ -52,7 +52,8 @@
  * @link       http://github.com/sebastianbergmann/php-object-freezer/
  * @since      Class available since Release 1.0.0
  */
-class Object_Freezer_Util {
+class Object_Freezer_Util
+{
     /**
      * Returns an associative array of all attributes of an object,
      * including those declared as protected or private.

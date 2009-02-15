@@ -96,8 +96,8 @@ class Object_Freezer_LazyProxy
     }
 
     /**
-     * Replaces the lazy proxy object with the real object and
-     * delegates the attribute read access to it.
+     * Delegates the attribute read access to the real object and
+     * tries to replace the lazy proxy object with it.
      *
      * @param  string $name
      * @return mixed
@@ -112,8 +112,8 @@ class Object_Freezer_LazyProxy
     }
 
     /**
-     * Replaces the lazy proxy object with the real object and
-     * delegates the attribute write access to it.
+     * Delegates the attribute write access to the real object and
+     * tries to replace the lazy proxy object with it.
      *
      * @param string $name
      * @param mixed  $value
@@ -128,8 +128,8 @@ class Object_Freezer_LazyProxy
     }
 
     /**
-     * Replaces the lazy proxy object with the real object and
-     * delegates the message to it.
+     * Delegates the message to the real object and
+     * tries to replace the lazy proxy object with it.
      *
      * @param  string $name
      * @param  array  $arguments
@@ -144,7 +144,7 @@ class Object_Freezer_LazyProxy
     }
 
     /**
-     * Replaces the lazy proxy object with the real object.
+     * Tries to replace the lazy proxy object with the real object.
      *
      * @param  integer $offset
      * @return object

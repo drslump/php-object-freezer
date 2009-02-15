@@ -11,4 +11,9 @@ class A
         $this->b = $b;
         $this->c = $c;
     }
+
+    public function getValues()
+    {
+        return array($this->a, $this->b, $this->c);
+    }
 }

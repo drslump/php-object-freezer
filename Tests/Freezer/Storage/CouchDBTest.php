@@ -410,7 +410,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::getObject
+     * @covers  Object_Freezer_LazyProxy::__get
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage_CouchDB::doStore
@@ -428,7 +430,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::getObject
+     * @covers  Object_Freezer_LazyProxy::__set
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage_CouchDB::doStore
@@ -449,7 +453,30 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::getObject
+     * @covers  Object_Freezer_LazyProxy::__call
+     * @covers  Object_Freezer_LazyProxy::replaceProxy
+     * @covers  Object_Freezer_Storage::store
+     * @covers  Object_Freezer_Storage::fetch
+     * @covers  Object_Freezer_Storage_CouchDB::doStore
+     * @covers  Object_Freezer_Storage_CouchDB::doFetch
+     * @depends testStoringAnObjectThatAggregatesOtherObjectsWorks
+     */
+    public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsWorks3()
+    {
+        $object = new C;
+        $this->storage->store($object);
+
+        $fetchedObject = $this->storage->fetch('a');
+
+        $this->assertEquals($object->b->a->getValues(), $fetchedObject->b->a->getValues());
+    }
+
+    /**
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::getObject
+     * @covers  Object_Freezer_LazyProxy::__get
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage::fetchArray
@@ -468,7 +495,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::getObject
+     * @covers  Object_Freezer_LazyProxy::__set
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage::fetchArray
@@ -490,7 +519,31 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::getObject
+     * @covers  Object_Freezer_LazyProxy::__call
+     * @covers  Object_Freezer_LazyProxy::replaceProxy
+     * @covers  Object_Freezer_Storage::store
+     * @covers  Object_Freezer_Storage::fetch
+     * @covers  Object_Freezer_Storage::fetchArray
+     * @covers  Object_Freezer_Storage_CouchDB::doStore
+     * @covers  Object_Freezer_Storage_CouchDB::doFetch
+     * @depends testStoringAnObjectThatAggregatesOtherObjectsInAnArrayWorks
+     */
+    public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsInAnArrayWorks3()
+    {
+        $object = new D;
+        $this->storage->store($object);
+
+        $fetchedObject = $this->storage->fetch('a');
+
+        $this->assertEquals($object->array[0]->getValues(), $fetchedObject->array[0]->getValues());
+    }
+
+    /**
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::getObject
+     * @covers  Object_Freezer_LazyProxy::__get
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage::fetchArray
@@ -509,7 +562,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::getObject
+     * @covers  Object_Freezer_LazyProxy::__set
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage::fetchArray
@@ -531,7 +586,31 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::getObject
+     * @covers  Object_Freezer_LazyProxy::__call
+     * @covers  Object_Freezer_LazyProxy::replaceProxy
+     * @covers  Object_Freezer_Storage::store
+     * @covers  Object_Freezer_Storage::fetch
+     * @covers  Object_Freezer_Storage::fetchArray
+     * @covers  Object_Freezer_Storage_CouchDB::doStore
+     * @covers  Object_Freezer_Storage_CouchDB::doFetch
+     * @depends testStoringAnObjectThatAggregatesOtherObjectsInANestedArrayWorks
+     */
+    public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsInANestedArrayWorks3()
+    {
+        $object = new E;
+        $this->storage->store($object);
+
+        $fetchedObject = $this->storage->fetch('a');
+
+        $this->assertEquals($object->array['array'][0]->getValues(), $fetchedObject->array['array'][0]->getValues());
+    }
+
+    /**
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::getObject
+     * @covers  Object_Freezer_LazyProxy::__get
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage_CouchDB::doStore
@@ -559,7 +638,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::getObject
+     * @covers  Object_Freezer_LazyProxy::__get
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage::fetchArray

@@ -104,7 +104,7 @@ class Object_Freezer_LazyProxy
      */
     public function __get($name)
     {
-        $object    = $this->replaceProxy();
+        $object    = $this->replaceProxy(2);
         $attribute = new ReflectionProperty($object, $name);
         $attribute->setAccessible(TRUE);
 
@@ -120,7 +120,7 @@ class Object_Freezer_LazyProxy
      */
     public function __set($name, $value)
     {
-        $object    = $this->replaceProxy();
+        $object    = $this->replaceProxy(2);
         $attribute = new ReflectionProperty($object, $name);
         $attribute->setAccessible(TRUE);
 
@@ -137,7 +137,7 @@ class Object_Freezer_LazyProxy
      */
     public function __call($name, $arguments)
     {
-        $object    = $this->replaceProxy();
+        $object    = $this->replaceProxy(3);
         $reflector = new ReflectionMethod($object, $name);
 
         return $reflector->invokeArgs($object, $arguments);
@@ -146,20 +146,33 @@ class Object_Freezer_LazyProxy
     /**
      * Replaces the lazy proxy object with the real object.
      *
+     * @param  integer $offset
      * @return object
      */
-    protected function replaceProxy()
+    protected function replaceProxy($offset)
     {
-        $trace     = debug_backtrace();
-        $reflector = new ReflectionObject($trace[3]['object']);
-        $object    = $this->getObject();
+        $object = $this->getObject();
 
-        foreach ($reflector->getProperties() as $attribute) {
-            $attribute->setAccessible(TRUE);
+        /**
+         * 0: LazyProxy::replaceProxy()
+         * 1: LazyProxy::__get($name) / LazyProxy::__set($name, $value)
+         *    2: Frame that accesses $name
+         * 1: LazyProxy::__call($method, $arguments)
+         * 2: LazyProxy::$method()
+         *    3: Frame that invokes $method
+         */
+        $trace = debug_backtrace();
 
-            if ($attribute->getValue($trace[3]['object']) === $this) {
-                $attribute->setValue($trace[3]['object'], $object);
-                break;
+        if (isset($trace[$offset]['object'])) {
+            $reflector = new ReflectionObject($trace[$offset]['object']);
+
+            foreach ($reflector->getProperties() as $attribute) {
+                $attribute->setAccessible(TRUE);
+
+                if ($attribute->getValue($trace[$offset]['object']) === $this) {
+                    $attribute->setValue($trace[$offset]['object'], $object);
+                    break;
+                }
             }
         }
 

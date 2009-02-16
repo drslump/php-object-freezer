@@ -138,7 +138,7 @@ class Object_Freezer_LazyProxy
         foreach ($reflector->getProperties() as $attribute) {
             $attribute->setAccessible(TRUE);
 
-            if ($attribute->getValue($trace[3]['object']) === $this) {
+            if ($attribute->getValue($trace[3]['object']) ===  $this) {
                 $attribute->setValue($trace[3]['object'], $object);
                 break;
             }

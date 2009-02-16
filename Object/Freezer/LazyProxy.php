@@ -65,18 +65,6 @@ class Object_Freezer_LazyProxy
     protected $uuid;
 
     /**
-     * Constructor.
-     *
-     * @param Object_Freezer_Storage $storage
-     * @param string                 $uuid
-     */
-    public function __construct(Object_Freezer_Storage $storage, $uuid)
-    {
-        $this->storage = $storage;
-        $this->uuid    = $uuid;
-    }
-
-    /**
      * @param string $name
      */
     public function __get($name)

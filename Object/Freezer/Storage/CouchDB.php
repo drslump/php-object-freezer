@@ -168,7 +168,9 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
               'state'     => $object['state']
             );
 
-            $this->fetchArray($object['state'], $objects);
+            if (!$this->lazyLoad) {
+                $this->fetchArray($object['state'], $objects);
+            }
         }
 
         if ($isRoot) {

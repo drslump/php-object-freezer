@@ -85,6 +85,9 @@
       <file baseinstalldir="/" name="E.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
+      <file baseinstalldir="/" name="F.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
       <file baseinstalldir="/" name="ConstructorCounter.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>

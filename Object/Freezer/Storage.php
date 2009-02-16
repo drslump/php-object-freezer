@@ -42,7 +42,6 @@
  */
 
 require_once 'Object/Freezer.php';
-require_once 'Object/Freezer/LazyProxy.php';
 
 /**
  * Abstract base class for object storage implementations.
@@ -111,10 +110,7 @@ abstract class Object_Freezer_Storage
         }
 
         if (!isset($this->cache[$id])) {
-            $frozenObject = $this->doFetch($id);
-            $this->fetchArray($frozenObject['objects'][$id]['state']);
-
-            $this->cache[$id] = $this->freezer->thaw($frozenObject);
+            $this->cache[$id] = $this->doFetch($id);
         }
 
         return $this->cache[$id];
@@ -124,21 +120,19 @@ abstract class Object_Freezer_Storage
      * Fetches a frozen array from the object storage and thaws it.
      *
      * @param array $array
+     * @param array $objects
      */
-    protected function fetchArray(array &$array)
+    protected function fetchArray(array $array, array &$objects = array())
     {
-        $keys    = array_keys($array);
-        $numKeys = count($keys);
-
-        for ($i = 0; $i < $numKeys; $i++) {
-            if (is_array($array[$keys[$i]])) {
-                $this->fetchArray($array[$keys[$i]]);
+        foreach ($array as $value) {
+            if (is_array($value)) {
+                $this->fetchArray($value, $objects);
             }
 
-            else if (is_string($array[$keys[$i]]) && strpos($array[$keys[$i]], '__php_object_freezer_') === 0) {
-                $array[$keys[$i]] = new Object_Freezer_LazyProxy(
-                  $this,
-                  str_replace('__php_object_freezer_', '', $array[$keys[$i]])
+            else if (is_string($value) &&
+                     strpos($value, '__php_object_freezer_') === 0) {
+                $this->doFetch(
+                  str_replace('__php_object_freezer_', '', $value), $objects
                 );
             }
         }

@@ -1,7 +1,7 @@
 <?php
 class F
 {
-    public $file;
+    private $file;
 
     public function __construct()
     {

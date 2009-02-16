@@ -172,7 +172,7 @@ class Object_Freezer_HashGenerator_NonRecursiveSHA1Test extends PHPUnit_Framewor
         $root->right->parent = $root;
 
         $this->assertEquals(
-          '830f3470aa75a83deab25ef5a7617a5967f07ed4',
+          '8465ba4f8f8ffc3160e32ca95d13a8c7bc353d4d',
           $this->hashGenerator->getHash($root)
         );
     }
@@ -183,12 +183,12 @@ class Object_Freezer_HashGenerator_NonRecursiveSHA1Test extends PHPUnit_Framewor
      */
     public function testObjectGraphThatContainsCyclesCanBeHashed2()
     {
-        $a = new Node2('a');
-        $b = new Node2('b', $a);
-        $c = new Node2('c', $a);
+        $a = new Node2;
+        $b = new Node2($a);
+        $c = new Node2($a);
 
         $this->assertEquals(
-          '8e3d1f054f570f708241f0ee5519c0913b802465',
+          '7e6de24ed54fbb0502c1c5888c50a388e917c4f7',
           $this->hashGenerator->getHash($a)
         );
     }

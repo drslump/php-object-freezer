@@ -140,13 +140,20 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
     /**
      * Fetches a frozen object from the object storage and thaws it.
      *
-     * @param  string $id The ID of the object that is to be fetched.
+     * @param  string $id      The ID of the object that is to be fetched.
+     * @param  array  $objects Only used internally.
      * @return object
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function doFetch($id)
+    public function doFetch($id, array &$objects = array())
     {
+        if (empty($objects)) {
+            $isRoot = TRUE;
+        } else {
+            $isRoot = FALSE;
+        }
+
         $response = $this->send('GET', '/' . $this->database . '/' . $id);
 
         if (strpos($response['headers'], 'HTTP/1.0 200 OK') === 0) {
@@ -157,16 +164,24 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
             );
         }
 
-        return array(
-          'root'    => $id,
-          'objects' => array(
-            $id => array(
+        if (!isset($objects[$id])) {
+            $objects[$id] = array(
               'className' => $object['class'],
               'isDirty'   => FALSE,
               'state'     => $object['state']
-            )
-          )
-        );
+            );
+
+            $this->fetchArray($object['state'], $objects);
+        }
+
+        if ($isRoot) {
+            return $this->freezer->thaw(
+              array(
+                'root'    => $id,
+                'objects' => $objects
+              )
+            );
+        }
     }
 
     /**

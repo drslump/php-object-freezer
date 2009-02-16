@@ -1,7 +1,7 @@
 <?php
 class C
 {
-    public $b;
+    private $b;
 
     public function __construct()
     {

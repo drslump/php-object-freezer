@@ -276,8 +276,7 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
               'parent'                    => NULL,
               'left'                      => '__php_object_freezer_b',
               'right'                     => '__php_object_freezer_c',
-              'payload'                   => NULL,
-              '__php_object_freezer_hash' => '0b78e0ce8a31baa6174474e2e84256eb06acafca'
+              '__php_object_freezer_hash' => '76c7552f5312b057858119ad83876c54d96bacfc'
             )
           ),
           $this->getFrozenObjectFromStorage('a')
@@ -291,8 +290,7 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
               'parent'                    => '__php_object_freezer_a',
               'left'                      => NULL,
               'right'                     => NULL,
-              'payload'                   => NULL,
-              '__php_object_freezer_hash' => '4c138823f68eaeada0d122ed08354cb776022703'
+              '__php_object_freezer_hash' => '0d09cba6ea7db1e19d8c34a9059ef1656cf8f806'
             )
           ),
           $this->getFrozenObjectFromStorage('b')
@@ -306,8 +304,7 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
               'parent'                    => '__php_object_freezer_a',
               'left'                      => NULL,
               'right'                     => NULL,
-              'payload'                   => NULL,
-              '__php_object_freezer_hash' => 'e168d40c488fd27ecadfb3a5efa34ca2a10c6400'
+              '__php_object_freezer_hash' => 'e1701657ea8f6fd87290416c125eb75abe4840d9'
             )
           ),
           $this->getFrozenObjectFromStorage('c')
@@ -322,9 +319,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
      */
     public function testStoringAnObjectGraphThatContainsCyclesWorks2()
     {
-        $a = new Node2('a');
-        $b = new Node2('b', $a);
-        $c = new Node2('c', $a);
+        $a = new Node2;
+        $b = new Node2($a);
+        $c = new Node2($a);
 
         $this->storage->store($a);
 
@@ -338,8 +335,7 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
                 0 => '__php_object_freezer_b',
                 1 => '__php_object_freezer_c'
               ),
-              'payload'                   => 'a',
-              '__php_object_freezer_hash' => 'e72fff28068b932cc1cbf7cd3ee19438145a2db2'
+              '__php_object_freezer_hash' => '6119e9af8bbb9a5c576dc52813603b24792b79e9'
             )
           ),
           $this->getFrozenObjectFromStorage('a')
@@ -352,8 +348,7 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
             'state' => array(
               'parent'                    => '__php_object_freezer_a',
               'children'                  => array(),
-              'payload'                   => 'b',
-              '__php_object_freezer_hash' => '7d784d361c301e8f9ea58e75d2288d2c8563ce24'
+              '__php_object_freezer_hash' => 'c5455b75bdba8b359388fac7a95d5da98ad25195'
             )
           ),
           $this->getFrozenObjectFromStorage('b')
@@ -366,8 +361,7 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
             'state' => array (
               'parent'                    => '__php_object_freezer_a',
               'children'                  => array(),
-              'payload'                   => 'c',
-              '__php_object_freezer_hash' => '6763b776a62bebae3da18961bb42b22dba7ce441'
+              '__php_object_freezer_hash' => '4e15cba2069c84bbd53583a771e2cd5ea3fe6d29'
             )
           ),
           $this->getFrozenObjectFromStorage('c')
@@ -421,9 +415,7 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
         $object = new C;
         $this->storage->store($object);
 
-        $fetchedObject = $this->storage->fetch('a');
-
-        $this->assertEquals($object->b->a->a, $fetchedObject->b->a->a);
+        $this->assertEquals($object, $this->storage->fetch('a'));
     }
 
     /**
@@ -439,9 +431,7 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
         $object = new D;
         $this->storage->store($object);
 
-        $fetchedObject = $this->storage->fetch('a');
-
-        $this->assertEquals($object->array[0]->a, $fetchedObject->array[0]->a);
+        $this->assertEquals($object, $this->storage->fetch('a'));
     }
 
     /**
@@ -457,9 +447,7 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
         $object = new E;
         $this->storage->store($object);
 
-        $fetchedObject = $this->storage->fetch('a');
-
-        $this->assertEquals($object->array['array'][0]->a, $fetchedObject->array['array'][0]->a);
+        $this->assertEquals($object, $this->storage->fetch('a'));
     }
 
     /**
@@ -471,22 +459,15 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
      */
     public function testStoringAndFetchingAnObjectGraphThatContainsCyclesWorks()
     {
-        $root                 = new Node;
-        $root->left           = new Node;
-        $root->right          = new Node;
-        $root->left->parent   = $root;
-        $root->right->parent  = $root;
-        $root->payload        = 'a';
-        $root->left->payload  = 'b';
-        $root->right->payload = 'c';
+        $root                = new Node;
+        $root->left          = new Node;
+        $root->right         = new Node;
+        $root->left->parent  = $root;
+        $root->right->parent = $root;
 
         $this->storage->store($root);
 
-        $fetchedObject = $this->storage->fetch('a');
-
-        $this->assertEquals($root->payload, $fetchedObject->payload);
-        $this->assertEquals($root->left->payload, $fetchedObject->left->payload);
-        $this->assertEquals($root->right->payload, $fetchedObject->right->payload);
+        $this->assertEquals($root, $this->storage->fetch('a'));
     }
 
     /**
@@ -499,17 +480,13 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
      */
     public function testStoringAndFetchingAnObjectGraphThatContainsCyclesWorks2()
     {
-        $root   = new Node2('a');
-        $left   = new Node2('b', $root);
-        $parent = new Node2('c', $root);
+        $root   = new Node2;
+        $left   = new Node2($root);
+        $parent = new Node2($root);
 
         $this->storage->store($root);
 
-        $fetchedObject = $this->storage->fetch('a');
-
-        $this->assertEquals($root->payload, $fetchedObject->payload);
-        $this->assertEquals($root->children[0]->payload, $fetchedObject->children[0]->payload);
-        $this->assertEquals($root->children[1]->payload, $fetchedObject->children[1]->payload);
+        $this->assertEquals($root, $this->storage->fetch('a'));
     }
 
     /**

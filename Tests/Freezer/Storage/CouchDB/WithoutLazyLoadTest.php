@@ -547,6 +547,23 @@ class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends PHPUnit_Framewo
         $this->storage->fetch('a');
     }
 
+    /**
+     * @covers            Object_Freezer_Storage_CouchDB::send
+     * @errorHandler      disabled
+     * @expectedException RuntimeException
+     */
+    public function testExceptionIsThrownIfConnectionFails()
+    {
+        $storage = new Object_Freezer_Storage_CouchDB(
+          'test',
+          $this->freezer,
+          FALSE,
+          'not.existing.host'
+        );
+
+        $storage->send('PUT', '/test');
+    }
+
     protected function getFrozenObjectFromStorage($id)
     {
         $buffer = $this->storage->send('GET', '/test/' . $id);

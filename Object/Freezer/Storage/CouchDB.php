@@ -192,7 +192,7 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
      */
     public function send($method, $url, $payload = NULL)
     {
-        $socket = fsockopen($this->host, $this->port, $errno, $errstr);
+        $socket = @fsockopen($this->host, $this->port, $errno, $errstr);
 
         if (!$socket) {
             throw new RuntimeException($errno . ': ' . $errstr);

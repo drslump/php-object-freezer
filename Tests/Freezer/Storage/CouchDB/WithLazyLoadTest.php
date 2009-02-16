@@ -122,13 +122,33 @@ class Object_Freezer_Storage_CouchDB_WithLazyLoadTest extends PHPUnit_Framework_
     /**
      * @covers Object_Freezer_LazyProxy::__construct
      * @covers Object_Freezer_LazyProxy::getObject
-     * @covers Object_Freezer_LazyProxy::__set
+     * @covers Object_Freezer_LazyProxy::__call
+     * @covers Object_Freezer_LazyProxy::replaceProxy
      * @covers Object_Freezer_Storage::store
      * @covers Object_Freezer_Storage::fetch
      * @covers Object_Freezer_Storage_CouchDB::doStore
      * @covers Object_Freezer_Storage_CouchDB::doFetch
      */
     public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsWorks2()
+    {
+        $object = new B;
+        $this->storage->store($object);
+
+        $fetchedObject = $this->storage->fetch('a');
+
+        $this->assertEquals($object->getValuesOfA(), $fetchedObject->getValuesOfA());
+    }
+
+    /**
+     * @covers Object_Freezer_LazyProxy::__construct
+     * @covers Object_Freezer_LazyProxy::getObject
+     * @covers Object_Freezer_LazyProxy::__set
+     * @covers Object_Freezer_Storage::store
+     * @covers Object_Freezer_Storage::fetch
+     * @covers Object_Freezer_Storage_CouchDB::doStore
+     * @covers Object_Freezer_Storage_CouchDB::doFetch
+     */
+    public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsWorks3()
     {
         $object = new C;
         $this->storage->store($object);
@@ -151,7 +171,7 @@ class Object_Freezer_Storage_CouchDB_WithLazyLoadTest extends PHPUnit_Framework_
      * @covers Object_Freezer_Storage_CouchDB::doStore
      * @covers Object_Freezer_Storage_CouchDB::doFetch
      */
-    public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsWorks3()
+    public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsWorks4()
     {
         $object = new C;
         $this->storage->store($object);

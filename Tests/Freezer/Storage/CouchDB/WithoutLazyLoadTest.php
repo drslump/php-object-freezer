@@ -57,7 +57,7 @@ require_once 'Object/Freezer/Storage/CouchDB.php';
  * @link       http://github.com/sebastianbergmann/php-object-freezer/
  * @since      Class available since Release 1.0.0
  */
-class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
+class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends PHPUnit_Framework_TestCase
 {
     protected $freezer;
     protected $storage;
@@ -278,7 +278,8 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
               'parent'                    => NULL,
               'left'                      => '__php_object_freezer_b',
               'right'                     => '__php_object_freezer_c',
-              '__php_object_freezer_hash' => '76c7552f5312b057858119ad83876c54d96bacfc'
+              'payload'                   => NULL,
+              '__php_object_freezer_hash' => '0b78e0ce8a31baa6174474e2e84256eb06acafca'
             )
           ),
           $this->getFrozenObjectFromStorage('a')
@@ -292,7 +293,8 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
               'parent'                    => '__php_object_freezer_a',
               'left'                      => NULL,
               'right'                     => NULL,
-              '__php_object_freezer_hash' => '0d09cba6ea7db1e19d8c34a9059ef1656cf8f806'
+              'payload'                   => NULL,
+              '__php_object_freezer_hash' => '4c138823f68eaeada0d122ed08354cb776022703'
             )
           ),
           $this->getFrozenObjectFromStorage('b')
@@ -306,7 +308,8 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
               'parent'                    => '__php_object_freezer_a',
               'left'                      => NULL,
               'right'                     => NULL,
-              '__php_object_freezer_hash' => 'e1701657ea8f6fd87290416c125eb75abe4840d9'
+              'payload'                   => NULL,
+              '__php_object_freezer_hash' => 'e168d40c488fd27ecadfb3a5efa34ca2a10c6400'
             )
           ),
           $this->getFrozenObjectFromStorage('c')
@@ -321,9 +324,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
      */
     public function testStoringAnObjectGraphThatContainsCyclesWorks2()
     {
-        $a = new Node2;
-        $b = new Node2($a);
-        $c = new Node2($a);
+        $a = new Node2('a');
+        $b = new Node2('b', $a);
+        $c = new Node2('c', $a);
 
         $this->storage->store($a);
 
@@ -337,7 +340,8 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
                 0 => '__php_object_freezer_b',
                 1 => '__php_object_freezer_c'
               ),
-              '__php_object_freezer_hash' => '6119e9af8bbb9a5c576dc52813603b24792b79e9'
+              'payload'                   => 'a',
+              '__php_object_freezer_hash' => 'e72fff28068b932cc1cbf7cd3ee19438145a2db2'
             )
           ),
           $this->getFrozenObjectFromStorage('a')
@@ -350,7 +354,8 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
             'state' => array(
               'parent'                    => '__php_object_freezer_a',
               'children'                  => array(),
-              '__php_object_freezer_hash' => 'c5455b75bdba8b359388fac7a95d5da98ad25195'
+              'payload'                   => 'b',
+              '__php_object_freezer_hash' => '7d784d361c301e8f9ea58e75d2288d2c8563ce24'
             )
           ),
           $this->getFrozenObjectFromStorage('b')
@@ -363,7 +368,8 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
             'state' => array (
               'parent'                    => '__php_object_freezer_a',
               'children'                  => array(),
-              '__php_object_freezer_hash' => '4e15cba2069c84bbd53583a771e2cd5ea3fe6d29'
+              'payload'                   => 'c',
+              '__php_object_freezer_hash' => '6763b776a62bebae3da18961bb42b22dba7ce441'
             )
           ),
           $this->getFrozenObjectFromStorage('c')
@@ -482,9 +488,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
      */
     public function testStoringAndFetchingAnObjectGraphThatContainsCyclesWorks2()
     {
-        $root   = new Node2;
-        $left   = new Node2($root);
-        $parent = new Node2($root);
+        $root   = new Node2('a');
+        $left   = new Node2('b', $root);
+        $parent = new Node2('c', $root);
 
         $this->storage->store($root);
 

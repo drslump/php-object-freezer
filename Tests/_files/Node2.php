@@ -1,12 +1,14 @@
 <?php
 class Node2
 {
-    protected $parent;
-    protected $children = array();
+    public $parent;
+    public $children = array();
+    public $payload;
 
-    public function __construct(Node2 $parent = NULL)
+    public function __construct($payload, Node2 $parent = NULL)
     {
-        $this->parent = $parent;
+        $this->payload = $payload;
+        $this->parent  = $parent;
 
         if ($this->parent !== NULL) {
             $this->parent->addChild($this);

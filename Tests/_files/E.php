@@ -1,7 +1,7 @@
 <?php
 class E
 {
-    private $array = array('array' => array());
+    public $array = array('array' => array());
 
     public function __construct()
     {

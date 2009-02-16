@@ -1,7 +1,7 @@
 <?php
 class D
 {
-    private $array;
+    public $array;
 
     public function __construct()
     {

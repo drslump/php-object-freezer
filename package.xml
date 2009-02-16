@@ -107,9 +107,14 @@
        </file>
       </dir>
       <dir name="Storage">
-       <file baseinstalldir="/" name="CouchDBTest.php" role="test">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-       </file>
+       <dir name="CouchDB">
+        <file baseinstalldir="/" name="WithLazyLoadTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="/" name="WithoutLazyLoadTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
       </dir>
       <file baseinstalldir="/" name="StorageTest.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />

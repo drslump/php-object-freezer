@@ -65,11 +65,6 @@ class Object_Freezer_LazyProxy
     protected $uuid;
 
     /**
-     * @var object
-     */
-    protected $thawedObject;
-
-    /**
      * Constructor.
      *
      * @param Object_Freezer_Storage $storage
@@ -79,20 +74,6 @@ class Object_Freezer_LazyProxy
     {
         $this->storage = $storage;
         $this->uuid    = $uuid;
-    }
-
-    /**
-     * Returns the real object.
-     *
-     * @return object
-     */
-    public function getObject()
-    {
-        if ($this->thawedObject === NULL) {
-            $this->thawedObject = $this->storage->fetch($this->uuid);
-        }
-
-        return $this->thawedObject;
     }
 
     /**
@@ -152,7 +133,7 @@ class Object_Freezer_LazyProxy
     {
         $trace     = debug_backtrace();
         $reflector = new ReflectionObject($trace[3]['object']);
-        $object    = $this->getObject();
+        $object    = $this->storage->fetch($this->uuid);
 
         foreach ($reflector->getProperties() as $attribute) {
             $attribute->setAccessible(TRUE);

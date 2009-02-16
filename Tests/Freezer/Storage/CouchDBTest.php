@@ -410,7 +410,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::__get
+     * @covers  Object_Freezer_LazyProxy::replaceProxy
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage_CouchDB::doStore
@@ -428,7 +430,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::__get
+     * @covers  Object_Freezer_LazyProxy::replaceProxy
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage::fetchArray
@@ -447,7 +451,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::__get
+     * @covers  Object_Freezer_LazyProxy::replaceProxy
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage::fetchArray
@@ -466,7 +472,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::__get
+     * @covers  Object_Freezer_LazyProxy::replaceProxy
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage_CouchDB::doStore
@@ -494,7 +502,9 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  Object_Freezer_LazyProxy
+     * @covers  Object_Freezer_LazyProxy::__construct
+     * @covers  Object_Freezer_LazyProxy::__get
+     * @covers  Object_Freezer_LazyProxy::replaceProxy
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage::fetchArray

@@ -134,7 +134,7 @@ abstract class Object_Freezer_Storage
         }
 
         if (!isset($this->cache[$id])) {
-            $this->cache[$id] = $this->doFetch($id);
+            $this->cache[$id] = $this->freezer->thaw($this->doFetch($id));
         }
 
         return $this->cache[$id];

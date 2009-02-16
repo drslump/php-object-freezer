@@ -149,23 +149,19 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
      */
     public function doFetch($id, array &$objects = array())
     {
-        if (empty($objects)) {
-            $isRoot = TRUE;
-        } else {
-            $isRoot = FALSE;
-        }
-
-        $response = $this->send('GET', '/' . $this->database . '/' . $id);
-
-        if (strpos($response['headers'], 'HTTP/1.0 200 OK') === 0) {
-            $object = json_decode($response['body'], TRUE);
-        } else {
-            throw new RuntimeException(
-              sprintf('Object with id "%s" could not be fetched.', $id)
-            );
-        }
+        $isRoot = empty($objects);
 
         if (!isset($objects[$id])) {
+            $response = $this->send('GET', '/' . $this->database . '/' . $id);
+
+            if (strpos($response['headers'], 'HTTP/1.0 200 OK') === 0) {
+                $object = json_decode($response['body'], TRUE);
+            } else {
+                throw new RuntimeException(
+                  sprintf('Object with id "%s" could not be fetched.', $id)
+                );
+            }
+
             $objects[$id] = array(
               'className' => $object['class'],
               'isDirty'   => FALSE,
@@ -176,11 +172,9 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
         }
 
         if ($isRoot) {
-            return $this->freezer->thaw(
-              array(
-                'root'    => $id,
-                'objects' => $objects
-              )
+            return array(
+              'root'    => $id,
+              'objects' => $objects
             );
         }
     }

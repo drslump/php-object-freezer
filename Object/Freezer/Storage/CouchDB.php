@@ -74,15 +74,16 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
     /**
      * Constructor.
      *
-     * @param  string         $database The name of the database to use.
-     * @param  Object_Freezer $freezer  The Object_Freezer to use.
-     * @param  string         $host     The hostname of the CouchDB instance to use.
-     * @param  int            $port     The port number of the CouchDB instance to use.
+     * @param  string         $database    The name of the database to use.
+     * @param  Object_Freezer $freezer     The Object_Freezer to use.
+     * @param  boolean        $useLazyLoad Flag that controls whether objects are fetched using lazy load.
+     * @param  string         $host        The hostname of the CouchDB instance to use.
+     * @param  int            $port        The port number of the CouchDB instance to use.
      * @throws InvalidArgumentException
      */
-    public function __construct($database, Object_Freezer $freezer = NULL, $host = 'localhost', $port = 5984)
+    public function __construct($database, Object_Freezer $freezer = NULL, $useLazyLoad = FALSE, $host = 'localhost', $port = 5984)
     {
-        parent::__construct($freezer);
+        parent::__construct($freezer, $useLazyLoad);
 
         // Bail out if a non-string was passed.
         if (!is_string($database)) {

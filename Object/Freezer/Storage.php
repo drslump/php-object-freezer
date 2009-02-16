@@ -67,17 +67,41 @@ abstract class Object_Freezer_Storage
     protected $freezer;
 
     /**
+     * @var boolean
+     */
+    protected $lazyLoad = FALSE;
+
+    /**
      * Constructor.
      *
-     * @param Object_Freezer $freezer
+     * @param Object_Freezer $freezer     The Object_Freezer to use.
+     * @param boolean        $useLazyLoad Flag that controls whether objects are fetched using lazy load.
      */
-    public function __construct(Object_Freezer $freezer = NULL)
+    public function __construct(Object_Freezer $freezer = NULL, $useLazyLoad = FALSE)
     {
         if ($freezer === NULL) {
             $freezer = new Object_Freezer;
         }
 
         $this->freezer = $freezer;
+
+        $this->setUseLazyLoad($useLazyLoad);
+    }
+
+    /**
+     * Sets the flag that controls whether objects are fetched using lazy load.
+     *
+     * @param  boolean $flag
+     * @throws InvalidArgumentException
+     */
+    public function setUseLazyLoad($flag)
+    {
+        // Bail out if a non-boolean was passed.
+        if (!is_bool($flag)) {
+            throw Object_Freezer_Util::getInvalidArgumentException(1, 'boolean');
+        }
+
+        $this->lazyLoad = $flag;
     }
 
     /**
@@ -129,11 +153,13 @@ abstract class Object_Freezer_Storage
                 $this->fetchArray($value, $objects);
             }
 
-            else if (is_string($value) &&
-                     strpos($value, '__php_object_freezer_') === 0) {
-                $this->doFetch(
-                  str_replace('__php_object_freezer_', '', $value), $objects
-                );
+            else if (is_string($value) && strpos($value, '__php_object_freezer_') === 0) {
+                $uuid = str_replace('__php_object_freezer_', '', $value);
+
+                if (!$this->lazyLoad) {
+                    $this->doFetch($uuid, $objects);
+                } else {
+                }
             }
         }
     }

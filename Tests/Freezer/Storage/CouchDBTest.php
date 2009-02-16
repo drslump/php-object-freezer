@@ -64,6 +64,7 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Object_Freezer_Storage_CouchDB::__construct
+     * @covers Object_Freezer_Storage_CouchDB::setUseLazyLoad
      */
     protected function setUp()
     {
@@ -87,6 +88,7 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
         $this->storage = new Object_Freezer_Storage_CouchDB(
           'test',
           $this->freezer,
+          FALSE,
           OBJECT_FREEZER_COUCHDB_HOST,
           (int)OBJECT_FREEZER_COUCHDB_PORT
         );
@@ -504,7 +506,7 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
      * @covers            Object_Freezer_Util::getInvalidArgumentException
      * @expectedException InvalidArgumentException
      */
-    public function testExceptionIsThrownIfThirdConstructorArgumentIsNotAString()
+    public function testExceptionIsThrownIfThirdConstructorArgumentIsNotABoolean()
     {
         $storage = new Object_Freezer_Storage_CouchDB('test', NULL, NULL);
     }
@@ -514,9 +516,19 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
      * @covers            Object_Freezer_Util::getInvalidArgumentException
      * @expectedException InvalidArgumentException
      */
-    public function testExceptionIsThrownIfFourthConstructorArgumentIsNotAnInteger()
+    public function testExceptionIsThrownIfFourthConstructorArgumentIsNotAString()
     {
-        $storage = new Object_Freezer_Storage_CouchDB('test', NULL, 'localhost', NULL);
+        $storage = new Object_Freezer_Storage_CouchDB('test', NULL, FALSE, NULL);
+    }
+
+    /**
+     * @covers            Object_Freezer_Storage_CouchDB::__construct
+     * @covers            Object_Freezer_Util::getInvalidArgumentException
+     * @expectedException InvalidArgumentException
+     */
+    public function testExceptionIsThrownIfFifthConstructorArgumentIsNotAnInteger()
+    {
+        $storage = new Object_Freezer_Storage_CouchDB('test', NULL, FALSE, 'localhost', NULL);
     }
 
     /**

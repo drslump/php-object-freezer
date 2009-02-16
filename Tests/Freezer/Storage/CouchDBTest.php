@@ -431,27 +431,6 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
      * @covers  Object_Freezer_LazyProxy
      * @covers  Object_Freezer_Storage::store
      * @covers  Object_Freezer_Storage::fetch
-     * @covers  Object_Freezer_Storage_CouchDB::doStore
-     * @covers  Object_Freezer_Storage_CouchDB::doFetch
-     * @depends testStoringAnObjectThatAggregatesOtherObjectsWorks
-     */
-    public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsWorks2()
-    {
-        $object = new C;
-        $this->storage->store($object);
-
-        $fetchedObject = $this->storage->fetch('a');
-
-        $object->b->a->a        = 2;
-        $fetchedObject->b->a->a = 2;
-
-        $this->assertEquals($object->b->a->a, $fetchedObject->b->a->a);
-    }
-
-    /**
-     * @covers  Object_Freezer_LazyProxy
-     * @covers  Object_Freezer_Storage::store
-     * @covers  Object_Freezer_Storage::fetch
      * @covers  Object_Freezer_Storage::fetchArray
      * @covers  Object_Freezer_Storage_CouchDB::doStore
      * @covers  Object_Freezer_Storage_CouchDB::doFetch
@@ -474,28 +453,6 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
      * @covers  Object_Freezer_Storage::fetchArray
      * @covers  Object_Freezer_Storage_CouchDB::doStore
      * @covers  Object_Freezer_Storage_CouchDB::doFetch
-     * @depends testStoringAnObjectThatAggregatesOtherObjectsInAnArrayWorks
-     */
-    public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsInAnArrayWorks2()
-    {
-        $object = new D;
-        $this->storage->store($object);
-
-        $fetchedObject = $this->storage->fetch('a');
-
-        $object->array[0]->a        = 2;
-        $fetchedObject->array[0]->a = 2;
-
-        $this->assertEquals($object->array[0]->a, $fetchedObject->array[0]->a);
-    }
-
-    /**
-     * @covers  Object_Freezer_LazyProxy
-     * @covers  Object_Freezer_Storage::store
-     * @covers  Object_Freezer_Storage::fetch
-     * @covers  Object_Freezer_Storage::fetchArray
-     * @covers  Object_Freezer_Storage_CouchDB::doStore
-     * @covers  Object_Freezer_Storage_CouchDB::doFetch
      * @depends testStoringAnObjectThatAggregatesOtherObjectsInANestedArrayWorks
      */
     public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsInANestedArrayWorks()
@@ -504,28 +461,6 @@ class Object_Freezer_Storage_CouchDBTest extends PHPUnit_Framework_TestCase
         $this->storage->store($object);
 
         $fetchedObject = $this->storage->fetch('a');
-
-        $this->assertEquals($object->array['array'][0]->a, $fetchedObject->array['array'][0]->a);
-    }
-
-    /**
-     * @covers  Object_Freezer_LazyProxy
-     * @covers  Object_Freezer_Storage::store
-     * @covers  Object_Freezer_Storage::fetch
-     * @covers  Object_Freezer_Storage::fetchArray
-     * @covers  Object_Freezer_Storage_CouchDB::doStore
-     * @covers  Object_Freezer_Storage_CouchDB::doFetch
-     * @depends testStoringAnObjectThatAggregatesOtherObjectsInANestedArrayWorks
-     */
-    public function testStoringAndFetchingAnObjectThatAggregatesOtherObjectsInANestedArrayWorks2()
-    {
-        $object = new E;
-        $this->storage->store($object);
-
-        $fetchedObject = $this->storage->fetch('a');
-
-        $object->array['array'][0]->a        = 2;
-        $fetchedObject->array['array'][0]->a = 2;
 
         $this->assertEquals($object->array['array'][0]->a, $fetchedObject->array['array'][0]->a);
     }

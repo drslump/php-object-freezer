@@ -153,21 +153,18 @@ abstract class Object_Freezer_Storage
      */
     protected function fetchArray(array &$array, array &$objects = array())
     {
-        $keys    = array_keys($array);
-        $numKeys = count($keys);
-
-        for ($i = 0; $i < $numKeys; $i++) {
-            if (is_array($array[$keys[$i]])) {
-                $this->fetchArray($array[$keys[$i]], $objects);
+        foreach ($array as &$value) {
+            if (is_array($value)) {
+                $this->fetchArray($value, $objects);
             }
 
-            else if (is_string($array[$keys[$i]]) && strpos($array[$keys[$i]], '__php_object_freezer_') === 0) {
-                $uuid = str_replace('__php_object_freezer_', '', $array[$keys[$i]]);
+            else if (is_string($value) && strpos($value, '__php_object_freezer_') === 0) {
+                $uuid = str_replace('__php_object_freezer_', '', $value);
 
                 if (!$this->lazyLoad) {
                     $this->doFetch($uuid, $objects);
                 } else {
-                    $array[$keys[$i]] = new Object_Freezer_LazyProxy($this, $uuid);
+                    $value = new Object_Freezer_LazyProxy($this, $uuid);
                 }
             }
         }

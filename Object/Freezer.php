@@ -220,7 +220,7 @@ class Object_Freezer
             foreach (Object_Freezer_Util::readAttributes($object) as $name => $value) {
                 if ($name !== '__php_object_freezer_uuid') {
                     if (is_array($value)) {
-                        $value = $this->freezeArray($value, $objects);
+                        $this->freezeArray($value, $objects);
                     }
 
                     else if (is_object($value) &&
@@ -251,25 +251,22 @@ class Object_Freezer
     /**
      * Freezes an array.
      *
-     * @param  array   $array   The array that is to be frozen.
-     * @param  array   $objects Only used internally.
-     * @return array            The frozen array.
+     * @param array $array   The array that is to be frozen.
+     * @param array $objects Only used internally.
      */
-    protected function freezeArray(array $array, array &$objects)
+    protected function freezeArray(array &$array, array &$objects)
     {
-        foreach (array_keys($array) as $key) {
-            if (is_array($array[$key])) {
-                $array[$key] = $this->freezeArray($array[$key], $objects);
+        foreach ($array as &$value) {
+            if (is_array($value)) {
+                $this->freezeArray($value, $objects);
             }
 
-            if (is_object($array[$key])) {
-                $tmp         = $this->freeze($array[$key], $objects);
-                $array[$key] = '__php_object_freezer_' . $tmp['root'];
+            else if (is_object($value)) {
+                $tmp   = $this->freeze($value, $objects);
+                $value = '__php_object_freezer_' . $tmp['root'];
                 unset($tmp);
             }
         }
-
-        return $array;
     }
 
     /**
@@ -399,18 +396,18 @@ class Object_Freezer
      */
     protected function thawArray(array &$array, array $frozenObject, array &$objects)
     {
-        foreach (array_keys($array) as $key) {
-            if (is_array($array[$key])) {
-                $this->thawArray($array[$key], $frozenObject, $objects);
+        foreach ($array as &$value) {
+            if (is_array($value)) {
+                $this->thawArray($value, $frozenObject, $objects);
             }
 
-            else if (is_string($array[$key]) && strpos($array[$key], '__php_object_freezer') === 0) {
+            else if (is_string($value) && strpos($value, '__php_object_freezer') === 0) {
                 $aggregatedObjectId = str_replace(
-                  '__php_object_freezer_', '', $array[$key]
+                  '__php_object_freezer_', '', $value
                 );
 
                 if (isset($frozenObject['objects'][$aggregatedObjectId])) {
-                    $array[$key] = $this->thaw(
+                    $value = $this->thaw(
                       $frozenObject, $aggregatedObjectId, $objects
                     );
                 }

@@ -169,10 +169,7 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
         }
 
         if ($isRoot) {
-            return array(
-              'root'    => $id,
-              'objects' => $objects
-            );
+            return array('root' => $id, 'objects' => $objects);
         }
     }
 

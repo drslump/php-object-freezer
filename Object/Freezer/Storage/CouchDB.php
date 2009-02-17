@@ -108,14 +108,11 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
     /**
      * Freezes an object and stores it in the object storage.
      *
-     * @param  object $object
-     * @return string
-     * @throws InvalidArgumentException
+     * @param array $frozenObject
      */
-    protected function doStore($object)
+    protected function doStore(array $frozenObject)
     {
-        $frozenObject = $this->freezer->freeze($object);
-        $payload      = array('docs' => array());
+        $payload = array('docs' => array());
 
         foreach ($frozenObject['objects'] as $_id => $_object) {
             if ($_object['isDirty'] !== FALSE) {
@@ -134,8 +131,6 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
               json_encode($payload)
             );
         }
-
-        return $object->__php_object_freezer_uuid;
     }
 
     /**

@@ -118,7 +118,9 @@ abstract class Object_Freezer_Storage
             throw Object_Freezer_Util::getInvalidArgumentException(1, 'object');
         }
 
-        return $this->doStore($object);
+        $this->doStore($this->freezer->freeze($object));
+
+        return $object->__php_object_freezer_uuid;
     }
 
     /**
@@ -174,10 +176,9 @@ abstract class Object_Freezer_Storage
     /**
      * Freezes an object and stores it in the object storage.
      *
-     * @param  object $object The object that is to be stored.
-     * @return string
+     * @param array $frozenObject
      */
-    abstract protected function doStore($object);
+    abstract protected function doStore(array $frozenObject);
 
     /**
      * Fetches a frozen object from the object storage and thaws it.

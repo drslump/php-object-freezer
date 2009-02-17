@@ -477,7 +477,7 @@ class Object_Freezer
      * @param  array $blacklist
      * @throws InvalidArgumentException
      */
-    public function setBlacklist($blacklist)
+    public function setBlacklist(array $blacklist)
     {
         $this->blacklist = $blacklist;
     }

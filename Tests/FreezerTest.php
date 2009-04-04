@@ -47,9 +47,11 @@ require_once 'Object/Freezer.php';
 
 require_once join(DIRECTORY_SEPARATOR, array(__DIR__, '_files', 'A.php'));
 require_once join(DIRECTORY_SEPARATOR, array(__DIR__, '_files', 'B.php'));
+require_once join(DIRECTORY_SEPARATOR, array(__DIR__, '_files', 'Base.php'));
 require_once join(DIRECTORY_SEPARATOR, array(__DIR__, '_files', 'C.php'));
 require_once join(DIRECTORY_SEPARATOR, array(__DIR__, '_files', 'D.php'));
 require_once join(DIRECTORY_SEPARATOR, array(__DIR__, '_files', 'E.php'));
+require_once join(DIRECTORY_SEPARATOR, array(__DIR__, '_files', 'Extended.php'));
 require_once join(DIRECTORY_SEPARATOR, array(__DIR__, '_files', 'F.php'));
 require_once join(DIRECTORY_SEPARATOR, array(__DIR__, '_files', 'ConstructorCounter.php'));
 require_once join(DIRECTORY_SEPARATOR, array(__DIR__, '_files', 'Node.php'));
@@ -107,6 +109,33 @@ class Object_FreezerTest extends PHPUnit_Framework_TestCase
             )
           ),
           $this->freezer->freeze(new A(1, 2, 3))
+        );
+    }
+
+    /**
+     * @covers Object_Freezer::freeze
+     */
+    public function testFreezingAnObjectOfAnExtendedClassWorks()
+    {
+        $this->assertEquals(
+          array(
+            'root'    => 'a',
+            'objects' => array(
+              'a' => array(
+                'className' => 'Extended',
+                'isDirty'   => TRUE,
+                'state' => array(
+                  'd' => 'd',
+                  'e' => 'e',
+                  'f' => 'f',
+                  'a' => 'a',
+                  'b' => 'b',
+                  '__php_object_freezer_hash' => '78e22e75eb22e8ca26127a89c156365b9a1e9a6e',
+                )
+              )
+            )
+          ),
+          $this->freezer->freeze(new Extended)
         );
     }
 
@@ -390,6 +419,20 @@ class Object_FreezerTest extends PHPUnit_Framework_TestCase
               $this->freezer->thaw($this->freezer->freeze($object))
             )
           )
+        );
+    }
+
+    /**
+     * @covers  Object_Freezer::freeze
+     * @covers  Object_Freezer::thaw
+     * @depends testFreezingAnObjectWorks
+     */
+    public function testFreezingAndThawingAnObjectOfAnExtendedClassWorks()
+    {
+        $object = new Extended;
+
+        $this->assertEquals(
+          $object, $this->freezer->thaw($this->freezer->freeze($object))
         );
     }
 

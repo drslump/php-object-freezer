@@ -142,7 +142,7 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function doFetch($id, array &$objects = array())
+    protected function doFetch($id, array &$objects = array())
     {
         $isRoot = empty($objects);
 

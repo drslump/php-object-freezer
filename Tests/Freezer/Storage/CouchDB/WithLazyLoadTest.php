@@ -97,7 +97,9 @@ class Object_Freezer_Storage_CouchDB_WithLazyLoadTest extends PHPUnit_Framework_
 
     protected function tearDown()
     {
-        $this->storage->send('DELETE', '/test/');
+        if ($this->storage !== NULL) {
+            $this->storage->send('DELETE', '/test/');
+        }
     }
 
     /**

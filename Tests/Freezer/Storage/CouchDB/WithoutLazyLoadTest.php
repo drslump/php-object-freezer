@@ -42,11 +42,10 @@
  * @since      File available since Release 1.0.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'Object/Freezer/Storage/CouchDB.php';
+require_once 'TestCase.php';
 
 /**
- * Tests for the Object_Freezer_Storage_CouchDB class.
+ * Tests for the Object_Freezer_Storage_CouchDB class without lazy loading.
  *
  * @package    Object_Freezer
  * @subpackage Tests
@@ -57,51 +56,9 @@ require_once 'Object/Freezer/Storage/CouchDB.php';
  * @link       http://github.com/sebastianbergmann/php-object-freezer/
  * @since      Class available since Release 1.0.0
  */
-class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends PHPUnit_Framework_TestCase
+class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends Object_Freezer_Storage_CouchDB_TestCase
 {
-    protected $freezer;
-    protected $storage;
-
-    /**
-     * @covers Object_Freezer_Storage_CouchDB::__construct
-     * @covers Object_Freezer_Storage_CouchDB::setUseLazyLoad
-     */
-    protected function setUp()
-    {
-        if (!@fsockopen(OBJECT_FREEZER_COUCHDB_HOST, OBJECT_FREEZER_COUCHDB_PORT, $errno, $errstr)) {
-            $this->markTestSkipped(
-              sprintf(
-                'CouchDB not running on %s:%d.',
-                OBJECT_FREEZER_COUCHDB_HOST,
-                OBJECT_FREEZER_COUCHDB_PORT
-              )
-            );
-        }
-
-        $idGenerator = $this->getMock('Object_Freezer_IdGenerator');
-        $idGenerator->expects($this->any())
-                    ->method('getId')
-                    ->will($this->onConsecutiveCalls('a', 'b', 'c'));
-
-        $this->freezer = new Object_Freezer($idGenerator);
-
-        $this->storage = new Object_Freezer_Storage_CouchDB(
-          'test',
-          $this->freezer,
-          FALSE,
-          OBJECT_FREEZER_COUCHDB_HOST,
-          (int)OBJECT_FREEZER_COUCHDB_PORT
-        );
-
-        $this->storage->send('PUT', '/test');
-    }
-
-    protected function tearDown()
-    {
-        if ($this->storage !== NULL) {
-            $this->storage->send('DELETE', '/test/');
-        }
-    }
+    protected $useLazyLoad = FALSE;
 
     /**
      * @covers Object_Freezer_Storage::store

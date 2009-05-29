@@ -92,12 +92,12 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
 
         // Bail out if a non-string was passed.
         if (!is_string($host)) {
-            throw Object_Freezer_Util::getInvalidArgumentException(3, 'object');
+            throw Object_Freezer_Util::getInvalidArgumentException(4, 'string');
         }
 
         // Bail out if a non-integer was passed.
         if (!is_int($port)) {
-            throw Object_Freezer_Util::getInvalidArgumentException(4, 'integer');
+            throw Object_Freezer_Util::getInvalidArgumentException(5, 'integer');
         }
 
         $this->database = $database;

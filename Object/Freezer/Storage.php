@@ -42,6 +42,7 @@
  */
 
 require_once 'Object/Freezer.php';
+require_once 'Object/Freezer/Cache.php';
 require_once 'Object/Freezer/LazyProxy.php';
 
 /**
@@ -58,9 +59,9 @@ require_once 'Object/Freezer/LazyProxy.php';
 abstract class Object_Freezer_Storage
 {
     /**
-     * @var array
+     * @var Object_Freezer_Cache
      */
-    protected $cache = array();
+    protected $cache;
 
     /**
      * @var Object_Freezer
@@ -75,16 +76,22 @@ abstract class Object_Freezer_Storage
     /**
      * Constructor.
      *
-     * @param Object_Freezer $freezer     The Object_Freezer to use.
-     * @param boolean        $useLazyLoad Flag that controls whether objects are fetched using lazy load.
+     * @param Object_Freezer       $freezer     The Object_Freezer to use.
+     * @param Object_Freezer_Cache $cache       The Object_Freezer_Cache to use.
+     * @param boolean              $useLazyLoad Flag that controls whether objects are fetched using lazy load.
      */
-    public function __construct(Object_Freezer $freezer = NULL, $useLazyLoad = FALSE)
+    public function __construct(Object_Freezer $freezer = NULL, Object_Freezer_Cache $cache = NULL, $useLazyLoad = FALSE)
     {
         if ($freezer === NULL) {
             $freezer = new Object_Freezer;
         }
 
+        if ($cache === NULL) {
+            $cache = new Object_Freezer_Cache;
+        }
+
         $this->freezer = $freezer;
+        $this->cache   = $cache;
 
         $this->setUseLazyLoad($useLazyLoad);
     }
@@ -136,13 +143,20 @@ abstract class Object_Freezer_Storage
             throw Object_Freezer_Util::getInvalidArgumentException(1, 'string');
         }
 
-        if (!isset($this->cache[$id])) {
+        // Try to retrieve object from the object cache.
+        $object = $this->cache->get($id);
+
+        if (!$object) {
+            // Retrieve object from the object storage.
             $frozenObject = $this->doFetch($id);
             $this->fetchArray($frozenObject['objects'][$id]['state']);
-            $this->cache[$id] = $this->freezer->thaw($frozenObject);
+            $object = $this->freezer->thaw($frozenObject);
+
+            // Put object into the object cache.
+            $this->cache->put($id, $object);
         }
 
-        return $this->cache[$id];
+        return $object;
     }
 
     /**

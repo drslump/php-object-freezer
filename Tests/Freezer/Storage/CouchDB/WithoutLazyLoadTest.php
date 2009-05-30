@@ -471,9 +471,9 @@ class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends Object_Freezer_
      * @covers            Object_Freezer_Util::getInvalidArgumentException
      * @expectedException InvalidArgumentException
      */
-    public function testExceptionIsThrownIfThirdConstructorArgumentIsNotABoolean()
+    public function testExceptionIsThrownIfFourthConstructorArgumentIsNotABoolean()
     {
-        $storage = new Object_Freezer_Storage_CouchDB('test', NULL, NULL);
+        $storage = new Object_Freezer_Storage_CouchDB('test', NULL, NULL, NULL);
     }
 
     /**
@@ -481,9 +481,9 @@ class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends Object_Freezer_
      * @covers            Object_Freezer_Util::getInvalidArgumentException
      * @expectedException InvalidArgumentException
      */
-    public function testExceptionIsThrownIfFourthConstructorArgumentIsNotAString()
+    public function testExceptionIsThrownIfFifthConstructorArgumentIsNotAString()
     {
-        $storage = new Object_Freezer_Storage_CouchDB('test', NULL, FALSE, NULL);
+        $storage = new Object_Freezer_Storage_CouchDB('test', NULL, NULL, FALSE, NULL);
     }
 
     /**
@@ -491,9 +491,9 @@ class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends Object_Freezer_
      * @covers            Object_Freezer_Util::getInvalidArgumentException
      * @expectedException InvalidArgumentException
      */
-    public function testExceptionIsThrownIfFifthConstructorArgumentIsNotAnInteger()
+    public function testExceptionIsThrownIfSixthConstructorArgumentIsNotAnInteger()
     {
-        $storage = new Object_Freezer_Storage_CouchDB('test', NULL, FALSE, 'localhost', NULL);
+        $storage = new Object_Freezer_Storage_CouchDB('test', NULL, NULL, FALSE, 'localhost', NULL);
     }
 
     /**
@@ -516,6 +516,7 @@ class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends Object_Freezer_
         $storage = new Object_Freezer_Storage_CouchDB(
           'test',
           $this->freezer,
+          NULL,
           FALSE,
           'not.existing.host'
         );

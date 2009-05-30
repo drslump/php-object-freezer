@@ -43,10 +43,10 @@
  */
 
 require_once 'PHPUnit/Framework.php';
-require_once 'Object/Freezer/Storage/CouchDB.php';
+require_once 'Object/Freezer/Cache.php';
 
 /**
- * Abstract base class for Object_Freezer_Storage_CouchDB test case classes.
+ * Tests for the Object_Freezer_Cache class.
  *
  * @package    Object_Freezer
  * @subpackage Tests
@@ -57,61 +57,34 @@ require_once 'Object/Freezer/Storage/CouchDB.php';
  * @link       http://github.com/sebastianbergmann/php-object-freezer/
  * @since      Class available since Release 1.0.0
  */
-abstract class Object_Freezer_Storage_CouchDB_TestCase extends PHPUnit_Framework_TestCase
+class Object_Freezer_CacheTest extends PHPUnit_Framework_TestCase
 {
-    protected $freezer;
-    protected $storage;
+    /**
+     * @covers Object_Freezer_Cache::put
+     * @covers Object_Freezer_Cache::evict
+     */
+    public function testPut()
+    {
+        $cache = new Object_Freezer_Cache;
+        $cache->put('foo', new StdClass);
+        return $cache;
+    }
 
     /**
-     * @covers Object_Freezer_Storage_CouchDB::__construct
-     * @covers Object_Freezer_Storage_CouchDB::setUseLazyLoad
+     * @covers  Object_Freezer_Cache::get
+     * @depends testPut
      */
-    protected function setUp()
+    public function testGet($cache)
     {
-        if (!@fsockopen(OBJECT_FREEZER_COUCHDB_HOST, OBJECT_FREEZER_COUCHDB_PORT, $errno, $errstr)) {
-            $this->markTestSkipped(
-              sprintf(
-                'CouchDB not running on %s:%d.',
-                OBJECT_FREEZER_COUCHDB_HOST,
-                OBJECT_FREEZER_COUCHDB_PORT
-              )
-            );
-        }
-
-        $idGenerator = $this->getMock('Object_Freezer_IdGenerator');
-        $idGenerator->expects($this->any())
-                    ->method('getId')
-                    ->will($this->onConsecutiveCalls('a', 'b', 'c'));
-
-        $this->freezer = new Object_Freezer($idGenerator);
-
-        $this->storage = new Object_Freezer_Storage_CouchDB(
-          'test',
-          $this->freezer,
-          NULL,
-          $this->useLazyLoad,
-          OBJECT_FREEZER_COUCHDB_HOST,
-          (int)OBJECT_FREEZER_COUCHDB_PORT
-        );
-
-        $this->storage->send('PUT', '/test');
+        $this->assertType('StdClass', $cache->get('foo'));
     }
 
-    protected function tearDown()
+    /**
+     * @covers  Object_Freezer_Cache::get
+     */
+    public function testGetReturnsFalseForNotExistingId()
     {
-        if ($this->storage !== NULL) {
-            $this->storage->send('DELETE', '/test/');
-        }
-    }
-
-    protected function getFrozenObjectFromStorage($id)
-    {
-        $buffer = $this->storage->send('GET', '/test/' . $id);
-        $buffer = $buffer['body'];
-
-        $frozenObject = json_decode($buffer, TRUE);
-        unset($frozenObject['_rev']);
-
-        return $frozenObject;
+        $cache = new Object_Freezer_Cache;
+        $this->assertFalse($cache->get('foo'));
     }
 }

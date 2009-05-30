@@ -35,21 +35,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    Object_Freezer
- * @subpackage Tests
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright  2008-2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since      File available since Release 1.0.0
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once 'Object/Freezer/Storage/CouchDB.php';
-
 /**
- * Abstract base class for Object_Freezer_Storage_CouchDB test case classes.
+ * Base class for object cache implementations.
  *
  * @package    Object_Freezer
- * @subpackage Tests
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright  2008-2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -57,61 +52,41 @@ require_once 'Object/Freezer/Storage/CouchDB.php';
  * @link       http://github.com/sebastianbergmann/php-object-freezer/
  * @since      Class available since Release 1.0.0
  */
-abstract class Object_Freezer_Storage_CouchDB_TestCase extends PHPUnit_Framework_TestCase
+class Object_Freezer_Cache
 {
-    protected $freezer;
-    protected $storage;
+    /**
+     * @var array
+     */
+    protected $objects = array();
 
     /**
-     * @covers Object_Freezer_Storage_CouchDB::__construct
-     * @covers Object_Freezer_Storage_CouchDB::setUseLazyLoad
+     * Retrieves an object from the object cache.
+     *
+     * @param  string $id
+     * @return object
      */
-    protected function setUp()
+    final public function get($id)
     {
-        if (!@fsockopen(OBJECT_FREEZER_COUCHDB_HOST, OBJECT_FREEZER_COUCHDB_PORT, $errno, $errstr)) {
-            $this->markTestSkipped(
-              sprintf(
-                'CouchDB not running on %s:%d.',
-                OBJECT_FREEZER_COUCHDB_HOST,
-                OBJECT_FREEZER_COUCHDB_PORT
-              )
-            );
-        }
-
-        $idGenerator = $this->getMock('Object_Freezer_IdGenerator');
-        $idGenerator->expects($this->any())
-                    ->method('getId')
-                    ->will($this->onConsecutiveCalls('a', 'b', 'c'));
-
-        $this->freezer = new Object_Freezer($idGenerator);
-
-        $this->storage = new Object_Freezer_Storage_CouchDB(
-          'test',
-          $this->freezer,
-          NULL,
-          $this->useLazyLoad,
-          OBJECT_FREEZER_COUCHDB_HOST,
-          (int)OBJECT_FREEZER_COUCHDB_PORT
-        );
-
-        $this->storage->send('PUT', '/test');
-    }
-
-    protected function tearDown()
-    {
-        if ($this->storage !== NULL) {
-            $this->storage->send('DELETE', '/test/');
+        if (isset($this->objects[$id])) {
+            return $this->objects[$id];
+        } else {
+            return FALSE;
         }
     }
 
-    protected function getFrozenObjectFromStorage($id)
+    /**
+     * Puts an object into the object cache.
+     *
+     * @param string $id
+     * @param object $object
+     */
+    final public function put($id, $object)
     {
-        $buffer = $this->storage->send('GET', '/test/' . $id);
-        $buffer = $buffer['body'];
+        $this->evict();
+        $this->objects[$id] = $object;
+    }
 
-        $frozenObject = json_decode($buffer, TRUE);
-        unset($frozenObject['_rev']);
-
-        return $frozenObject;
+    protected function evict()
+    {
     }
 }

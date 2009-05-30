@@ -65,7 +65,7 @@ class Object_Freezer_Cache
      * @param  string $id
      * @return object
      */
-    final public function get($id)
+    public function get($id)
     {
         if (isset($this->objects[$id])) {
             return $this->objects[$id];
@@ -80,13 +80,8 @@ class Object_Freezer_Cache
      * @param string $id
      * @param object $object
      */
-    final public function put($id, $object)
+    public function put($id, $object)
     {
-        $this->evict();
         $this->objects[$id] = $object;
-    }
-
-    protected function evict()
-    {
     }
 }

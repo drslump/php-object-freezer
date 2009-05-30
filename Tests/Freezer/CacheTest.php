@@ -61,7 +61,6 @@ class Object_Freezer_CacheTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @covers Object_Freezer_Cache::put
-     * @covers Object_Freezer_Cache::evict
      */
     public function testPut()
     {

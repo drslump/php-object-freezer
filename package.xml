@@ -47,6 +47,9 @@
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
      </dir>
+     <file baseinstalldir="/" name="Cache.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
      <file baseinstalldir="/" name="HashGenerator.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
@@ -125,6 +128,9 @@
         </file>
        </dir>
       </dir>
+      <file baseinstalldir="/" name="CacheTest.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
       <file baseinstalldir="/" name="StorageTest.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>

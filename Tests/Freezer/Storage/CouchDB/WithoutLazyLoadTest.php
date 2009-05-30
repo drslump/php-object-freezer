@@ -522,15 +522,4 @@ class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends Object_Freezer_
 
         $storage->send('PUT', '/test');
     }
-
-    protected function getFrozenObjectFromStorage($id)
-    {
-        $buffer = $this->storage->send('GET', '/test/' . $id);
-        $buffer = $buffer['body'];
-
-        $frozenObject = json_decode($buffer, TRUE);
-        unset($frozenObject['_rev']);
-
-        return $frozenObject;
-    }
 }

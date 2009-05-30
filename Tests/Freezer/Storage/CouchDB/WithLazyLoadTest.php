@@ -322,16 +322,4 @@ class Object_Freezer_Storage_CouchDB_WithLazyLoadTest extends Object_Freezer_Sto
         $this->assertEquals($root->children[0]->payload, $fetchedObject->children[0]->payload);
         $this->assertEquals($root->children[1]->payload, $fetchedObject->children[1]->payload);
     }
-
-    protected function getFrozenObjectFromStorage($id)
-    {
-        $buffer = $this->storage->send('GET', '/test/' . $id);
-        $buffer = $buffer['body'];
-
-        $frozenObject = json_decode($buffer, TRUE);
-        unset($frozenObject['_rev']);
-
-        return $frozenObject;
-    }
 }
-

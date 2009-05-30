@@ -102,4 +102,15 @@ abstract class Object_Freezer_Storage_CouchDB_TestCase extends PHPUnit_Framework
             $this->storage->send('DELETE', '/test/');
         }
     }
+
+    protected function getFrozenObjectFromStorage($id)
+    {
+        $buffer = $this->storage->send('GET', '/test/' . $id);
+        $buffer = $buffer['body'];
+
+        $frozenObject = json_decode($buffer, TRUE);
+        unset($frozenObject['_rev']);
+
+        return $frozenObject;
+    }
 }

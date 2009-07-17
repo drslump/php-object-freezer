@@ -76,9 +76,13 @@ abstract class Object_Freezer_Storage
     /**
      * Constructor.
      *
-     * @param Object_Freezer       $freezer     The Object_Freezer to use.
-     * @param Object_Freezer_Cache $cache       The Object_Freezer_Cache to use.
-     * @param boolean              $useLazyLoad Flag that controls whether objects are fetched using lazy load.
+     * @param  Object_Freezer       $freezer
+     *                              Object_Freezer instance to be used
+     * @param  Object_Freezer_Cache $cache
+     *                              Object_Freezer_Cache instance to be used
+     * @param  boolean              $useLazyLoad
+     *                              Flag that controls whether objects are
+     *                              fetched using lazy load or not
      */
     public function __construct(Object_Freezer $freezer = NULL, Object_Freezer_Cache $cache = NULL, $useLazyLoad = FALSE)
     {
@@ -106,7 +110,9 @@ abstract class Object_Freezer_Storage
     {
         // Bail out if a non-boolean was passed.
         if (!is_bool($flag)) {
-            throw Object_Freezer_Util::getInvalidArgumentException(1, 'boolean');
+            throw Object_Freezer_Util::getInvalidArgumentException(
+              1, 'boolean'
+            );
         }
 
         $this->lazyLoad = $flag;
@@ -172,7 +178,8 @@ abstract class Object_Freezer_Storage
                 $this->fetchArray($value, $objects);
             }
 
-            else if (is_string($value) && strpos($value, '__php_object_freezer_') === 0) {
+            else if (is_string($value) &&
+                     strpos($value, '__php_object_freezer_') === 0) {
                 $uuid = str_replace('__php_object_freezer_', '', $value);
 
                 if (!$this->lazyLoad) {

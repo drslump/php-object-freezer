@@ -159,7 +159,8 @@ class Object_Freezer
      *       ["state"]=>
      *       array(2) {
      *         ["b"]=>
-     *         string(57) "__php_object_freezer_3cd682bf-8eba-4fec-90e2-ebe98aa07ab7"
+     *         string(57)
+     *         "__php_object_freezer_3cd682bf-8eba-4fec-90e2-ebe98aa07ab7"
      *         ["__php_object_freezer_hash"]=>
      *         string(40) "8b80da9c38c0c41c829cbbefbca9b18aa67ff607"
      *       }
@@ -184,7 +185,8 @@ class Object_Freezer
      *
      * The reference to the object of class B that the object of class A had
      * before it was frozen has been replaced with the UUID of the frozen
-     * object of class B (__php_object_freezer_3cd682bf-8eba-4fec-90e2-ebe98aa07ab7).
+     * object of class B
+     * (__php_object_freezer_3cd682bf-8eba-4fec-90e2-ebe98aa07ab7).
      *
      * The result array's "root" element contains the UUID for the now frozen
      * object of class A (32246c35-f47b-4fbc-a2ad-ed14e520865e).
@@ -217,27 +219,28 @@ class Object_Freezer
             );
 
             // Iterate over the attributes of the object.
-            foreach (Object_Freezer_Util::readAttributes($object) as $name => $value) {
-                if ($name !== '__php_object_freezer_uuid') {
-                    if (is_array($value)) {
-                        $this->freezeArray($value, $objects);
+            foreach (Object_Freezer_Util::readAttributes($object) as $k => $v) {
+                if ($k !== '__php_object_freezer_uuid') {
+                    if (is_array($v)) {
+                        $this->freezeArray($v, $objects);
                     }
 
-                    else if (is_object($value) &&
+                    else if (is_object($v) &&
                              !in_array(get_class($object), $this->blacklist)) {
                         // Freeze the aggregated object.
-                        $this->freeze($value, $objects);
+                        $this->freeze($v, $objects);
 
-                        // Replace $value with the aggregated object's UUID.
-                        $value = '__php_object_freezer_' . $value->__php_object_freezer_uuid;
+                        // Replace $v with the aggregated object's UUID.
+                        $v = '__php_object_freezer_' .
+                             $v->__php_object_freezer_uuid;
                     }
 
-                    else if (is_resource($value)) {
-                        $value = NULL;
+                    else if (is_resource($v)) {
+                        $v = NULL;
                     }
 
                     // Store the attribute in the object's state array.
-                    $objects[$object->__php_object_freezer_uuid]['state'][$name] = $value;
+                    $objects[$object->__php_object_freezer_uuid]['state'][$k] = $v;
                 }
             }
         }
@@ -290,7 +293,8 @@ class Object_Freezer
      *           'className' => 'A',
      *           'isDirty'   => FALSE,
      *           'state'     => array(
-     *             'b' => '__php_object_freezer_3cd682bf-8eba-4fec-90e2-ebe98aa07ab7',
+     *             'b' =>
+     *             '__php_object_freezer_3cd682bf-8eba-4fec-90e2-ebe98aa07ab7',
      *           ),
      *         ),
      *         '3cd682bf-8eba-4fec-90e2-ebe98aa07ab7' => array(
@@ -334,11 +338,11 @@ class Object_Freezer
     public function thaw(array $frozenObject, $root = NULL, array &$objects = array())
     {
         // Bail out if one of the required classes cannot be found.
-        foreach ($frozenObject['objects'] as $_frozenObject) {
-            if (!class_exists($_frozenObject['className'], $this->useAutoload)) {
+        foreach ($frozenObject['objects'] as $object) {
+            if (!class_exists($object['className'], $this->useAutoload)) {
                 throw new RuntimeException(
                   sprintf(
-                    'Class "%s" could not be found.', $_frozenObject['className']
+                    'Class "%s" could not be found.', $object['className']
                   )
                 );
             }
@@ -401,7 +405,8 @@ class Object_Freezer
                 $this->thawArray($value, $frozenObject, $objects);
             }
 
-            else if (is_string($value) && strpos($value, '__php_object_freezer') === 0) {
+            else if (is_string($value) &&
+                     strpos($value, '__php_object_freezer') === 0) {
                 $aggregatedObjectId = str_replace(
                   '__php_object_freezer_', '', $value
                 );
@@ -504,7 +509,9 @@ class Object_Freezer
     {
         // Bail out if a non-boolean was passed.
         if (!is_bool($flag)) {
-            throw Object_Freezer_Util::getInvalidArgumentException(1, 'boolean');
+            throw Object_Freezer_Util::getInvalidArgumentException(
+              1, 'boolean'
+            );
         }
 
         $this->useAutoload = $flag;
@@ -532,7 +539,9 @@ class Object_Freezer
 
         // Bail out if a non-boolean was passed.
         if (!is_bool($rehash)) {
-            throw Object_Freezer_Util::getInvalidArgumentException(2, 'boolean');
+            throw Object_Freezer_Util::getInvalidArgumentException(
+              2, 'boolean'
+            );
         }
 
         $isDirty = TRUE;

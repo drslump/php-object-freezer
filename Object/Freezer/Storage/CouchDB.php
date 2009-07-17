@@ -74,12 +74,19 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
     /**
      * Constructor.
      *
-     * @param  string               $database    The name of the database to use.
-     * @param  Object_Freezer       $freezer     The Object_Freezer to use.
-     * @param  Object_Freezer_Cache $cache       The Object_Freezer_Cache to use.
-     * @param  boolean              $useLazyLoad Flag that controls whether objects are fetched using lazy load.
-     * @param  string               $host        The hostname of the CouchDB instance to use.
-     * @param  int                  $port        The port number of the CouchDB instance to use.
+     * @param  string               $database
+     *                              Name of the database to be used
+     * @param  Object_Freezer       $freezer
+     *                              Object_Freezer instance to be used
+     * @param  Object_Freezer_Cache $cache
+     *                              Object_Freezer_Cache instance to be used
+     * @param  boolean              $useLazyLoad
+     *                              Flag that controls whether objects are
+     *                              fetched using lazy load or not
+     * @param  string               $host
+     *                              Hostname of the CouchDB instance to be used
+     * @param  int                  $port
+     *                              Port of the CouchDB instance to be used
      * @throws InvalidArgumentException
      */
     public function __construct($database, Object_Freezer $freezer = NULL, Object_Freezer_Cache $cache = NULL, $useLazyLoad = FALSE, $host = 'localhost', $port = 5984)
@@ -98,7 +105,9 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
 
         // Bail out if a non-integer was passed.
         if (!is_int($port)) {
-            throw Object_Freezer_Util::getInvalidArgumentException(5, 'integer');
+            throw Object_Freezer_Util::getInvalidArgumentException(
+              5, 'integer'
+            );
         }
 
         $this->database = $database;

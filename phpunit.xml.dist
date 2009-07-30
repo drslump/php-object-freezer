@@ -3,6 +3,11 @@
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
          syntaxCheck="false">
+  <testsuites>
+    <testsuite name="Object_Freezer">
+      <directory suffix="Test.php">Tests</directory>
+    </testsuite>
+  </testsuites>
   <php>
     <const name="OBJECT_FREEZER_COUCHDB_HOST" value="localhost"/>
     <const name="OBJECT_FREEZER_COUCHDB_PORT" value="5984"/>

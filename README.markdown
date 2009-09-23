@@ -159,7 +159,7 @@ This class provides the means to use CouchDB as an object storage.
     }
 
     $storage = new Object_Freezer_Storage_CouchDB(
-      'database', new Object_Freezer, TRUE, 'localhost', 5984
+      'database', NULL, NULL, TRUE, 'localhost', 5984
     );
 
     $id = $storage->store(new A);

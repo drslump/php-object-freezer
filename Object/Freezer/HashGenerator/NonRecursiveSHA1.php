@@ -102,7 +102,8 @@ class Object_Freezer_HashGenerator_NonRecursiveSHA1 implements Object_Freezer_Ha
 
             else if (is_object($value)) {
                 if (!isset($value->__php_object_freezer_uuid)) {
-                    $value->__php_object_freezer_uuid = $this->idGenerator->getId();
+                    $value->__php_object_freezer_uuid =
+                    $this->idGenerator->getId();
                 }
 
                 $attributes[$key] = $value->__php_object_freezer_uuid;

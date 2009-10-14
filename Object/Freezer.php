@@ -210,9 +210,10 @@ class Object_Freezer
         }
 
         $isDirty = $this->isDirty($object, TRUE);
+        $uuid    = $object->__php_object_freezer_uuid;
 
-        if (!isset($objects[$object->__php_object_freezer_uuid])) {
-            $objects[$object->__php_object_freezer_uuid] = array(
+        if (!isset($objects[$uuid])) {
+            $objects[$uuid] = array(
               'className' => get_class($object),
               'isDirty'   => $isDirty,
               'state'     => array()
@@ -240,15 +241,12 @@ class Object_Freezer
                     }
 
                     // Store the attribute in the object's state array.
-                    $objects[$object->__php_object_freezer_uuid]['state'][$k] = $v;
+                    $objects[$uuid]['state'][$k] = $v;
                 }
             }
         }
 
-        return array(
-          'root'    => $object->__php_object_freezer_uuid,
-          'objects' => $objects
-        );
+        return array('root' => $uuid, 'objects' => $objects);
     }
 
     /**
@@ -383,7 +381,8 @@ class Object_Freezer
 
             // Store hash.
             if (isset($state['__php_object_freezer_hash'])) {
-                $objects[$root]->__php_object_freezer_hash = $state['__php_object_freezer_hash'];
+                $objects[$root]->__php_object_freezer_hash =
+                $state['__php_object_freezer_hash'];
             }
         }
 

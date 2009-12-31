@@ -2,7 +2,7 @@
 /**
  * Object_Freezer
  *
- * Copyright (c) 2008-2009, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2008-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
  *
  * @package    Object_Freezer
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2008-2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2008-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since      File available since Release 1.0.0
  */
@@ -48,7 +48,7 @@ require_once 'Object/Freezer/IdGenerator.php';
  *
  * @package    Object_Freezer
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2008-2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2008-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://github.com/sebastianbergmann/php-object-freezer/

@@ -66,6 +66,11 @@ class Object_Freezer_StorageTest extends PHPUnit_Framework_TestCase
         $this->stub = $this->getMockForAbstractClass('Object_Freezer_Storage');
     }
 
+    protected function tearDown()
+    {
+        $this->stub = NULL;
+    }
+
     /**
      * @covers Object_Freezer_Storage::__construct
      */

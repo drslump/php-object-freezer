@@ -86,6 +86,12 @@ class Object_Freezer_HashGenerator_NonRecursiveSHA1Test extends PHPUnit_Framewor
         );
     }
 
+    protected function tearDown()
+    {
+        $this->hashGenerator = NULL;
+        $this->idGenerator   = NULL;
+    }
+
     /**
      * @covers Object_Freezer_HashGenerator_NonRecursiveSHA1::getHash
      */

@@ -102,6 +102,9 @@ abstract class Object_Freezer_Storage_CouchDB_TestCase extends PHPUnit_Framework
         if ($this->storage !== NULL) {
             $this->storage->send('DELETE', '/test/');
         }
+
+        $this->freezer = NULL;
+        $this->storage = NULL;
     }
 
     protected function getFrozenObjectFromStorage($id)

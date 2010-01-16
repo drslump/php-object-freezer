@@ -87,6 +87,12 @@ class Object_FreezerTest extends PHPUnit_Framework_TestCase
         $this->freezer = new Object_Freezer($this->idGenerator);
     }
 
+    protected function tearDown()
+    {
+        $this->freezer     = NULL;
+        $this->idGenerator = NULL;
+    }
+
     /**
      * @covers Object_Freezer::freeze
      */

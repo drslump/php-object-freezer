@@ -42,7 +42,6 @@
  * @since      File available since Release 1.0.0
  */
 
-require_once 'PHPUnit/Framework.php';
 require_once 'Object/Freezer/Storage/CouchDB.php';
 
 /**

@@ -66,10 +66,11 @@ class Object_Freezer_IdGenerator_UUIDTest extends PHPUnit_Framework_TestCase
      */
     public function testReturnValueOfUuidIsUnique()
     {
-        $uuid = new Object_Freezer_IdGenerator_UUID;
+        $uuid    = new Object_Freezer_IdGenerator_UUID;
+        $fixedId = $uuid->getId();
 
         for ($i = 1; $i <= self::LEVEL_OF_PARANOIA; $i++) {
-            $this->assertNotEquals($uuid->getId(), $uuid->getId());
+            $this->assertNotEquals($fixedId, $uuid->getId());
         }
     }
 }

@@ -456,7 +456,7 @@ class Object_Freezer
      * Sets the Object_Freezer_HashGenerator implementation used
      * to generate hash objects.
      *
-     * @param Object_Freezer_IdGenerator $idGenerator
+     * @param Object_Freezer_HashGenerator $hashGenerator
      */
     public function setHashGenerator(Object_Freezer_HashGenerator $hashGenerator)
     {

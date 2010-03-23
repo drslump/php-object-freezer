@@ -135,7 +135,7 @@ class Object_Freezer_LazyProxy
      * @param  array  $arguments
      * @return mixed
      */
-    public function __call($name, $arguments)
+    public function __call($name, array $arguments)
     {
         $object    = $this->replaceProxy(3);
         $reflector = new ReflectionMethod($object, $name);

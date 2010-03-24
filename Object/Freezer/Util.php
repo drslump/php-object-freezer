@@ -94,7 +94,7 @@ class Object_Freezer_Util
 
         return new InvalidArgumentException(
           sprintf(
-            'Argument #%d of %s:%s() is no %s',
+            'Argument #%d of %s::%s() is no %s',
             $argument,
             $stack[1]['class'],
             $stack[1]['function'],

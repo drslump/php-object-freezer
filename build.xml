@@ -9,11 +9,6 @@
   <mkdir dir="${basedir}/build/coverage"/>
   <mkdir dir="${basedir}/build/logs"/>
   <mkdir dir="${basedir}/build/pdepend"/>
-
-  <!-- Generate dummy PMD logfile -->
-  <echoxml file="${basedir}/build/logs/pmd.xml">
-   <pmd version="dummy"/>
-  </echoxml>
  </target>
 
  <!-- Run unit tests and generate junit.xml and clover.xml -->
@@ -21,10 +16,11 @@
   <exec executable="phpunit" failonerror="true"/>
  </target>
 
- <!-- Run pdepend, phpcpd, and phpcs in parallel -->
+ <!-- Run pdepend, phpmd, phpcpd, and phpcs in parallel -->
  <target name="parallelTasks">
   <parallel>
    <antcall target="pdepend"/>
+   <antcall target="phpmd"/>
    <antcall target="phpcpd"/>
    <antcall target="phpcs"/>
   </parallel>
@@ -37,6 +33,13 @@
               --jdepend-chart=${basedir}/build/pdepend/08-dependencies.svg
               --overview-pyramid=${basedir}/build/pdepend/09-overview-pyramid.svg
               Object" />
+  </exec>
+ </target>
+
+ <!-- Generate pmd.xml -->
+ <target name="phpmd">
+  <exec executable="phpmd">
+   <arg line="Object xml codesize --reportfile ${basedir}/build/logs/pmd.xml" />
   </exec>
  </target>
 

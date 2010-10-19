@@ -200,8 +200,10 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
             throw new RuntimeException($errno . ': ' . $errstr);
         }
 
-        $request = $method . ' ' . $url . " HTTP/1.0\r\nHost: localhost\r\n";
-        $request .= "Content-Type: application/json";
+        $request = $method . ' ' . $url . " HTTP/1.1\r\n";
+        $request .= "Host: $this->host:$this->port\r\n";
+        $request .= "Content-Type: application/json\r\n";
+        $request .= "Connection: close\r\n";
 
         if ($payload !== NULL) {
             $request .= 'Content-Length: ' . strlen($payload) . "\r\n\r\n";

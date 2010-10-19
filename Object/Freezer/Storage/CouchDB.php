@@ -201,6 +201,7 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
         }
 
         $request = $method . ' ' . $url . " HTTP/1.0\r\nHost: localhost\r\n";
+        $request .= "Content-Type: application/json";
 
         if ($payload !== NULL) {
             $request .= 'Content-Length: ' . strlen($payload) . "\r\n\r\n";

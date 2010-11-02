@@ -159,7 +159,7 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
         if (!isset($objects[$id])) {
             $response = $this->send('GET', '/' . $this->database . '/' . $id);
 
-            if (strpos($response['headers'], 'HTTP/1.0 200 OK') === 0) {
+            if (strpos($response['headers'], 'HTTP/1.1 200 OK') === 0) {
                 $object = json_decode($response['body'], TRUE);
             } else {
                 throw new RuntimeException(

@@ -65,7 +65,7 @@ abstract class Object_Freezer_Storage_CouchDB_TestCase extends PHPUnit_Framework
      * @covers Object_Freezer_Storage_CouchDB::__construct
      * @covers Object_Freezer_Storage_CouchDB::setUseLazyLoad
      */
-    protected function setUp()
+    protected function setUp($create = TRUE)
     {
         if (!@fsockopen(OBJECT_FREEZER_COUCHDB_HOST, OBJECT_FREEZER_COUCHDB_PORT, $errno, $errstr)) {
             $this->markTestSkipped(
@@ -93,7 +93,9 @@ abstract class Object_Freezer_Storage_CouchDB_TestCase extends PHPUnit_Framework
           (int)OBJECT_FREEZER_COUCHDB_PORT
         );
 
-        $this->storage->send('PUT', '/test');
+        if ($create) {
+            $this->storage->send('PUT', '/test');
+        }
     }
 
     protected function tearDown()

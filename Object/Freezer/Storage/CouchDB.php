@@ -72,6 +72,11 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
     protected $port;
 
     /**
+     * @var array
+     */
+    protected $revisions = array();
+
+    /**
      * Constructor.
      *
      * @param  string               $database
@@ -126,20 +131,38 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
 
         foreach ($frozenObject['objects'] as $_id => $_object) {
             if ($_object['isDirty'] !== FALSE) {
-                $payload['docs'][] = array(
+                $data = array(
                   '_id'   => $_id,
+                  '_rev'  => (isset($this->revisions[$_id])) ? $this->revisions[$_id] : null,
                   'class' => $_object['className'],
                   'state' => $_object['state']
                 );
+                if (!$data['_rev']) {
+                    unset($data['_rev']);
+                }
+                $payload['docs'][] = $data;
             }
         }
 
         if (!empty($payload['docs'])) {
-            $this->send(
+            $response = $this->send(
               'POST',
               '/' . $this->database . '/_bulk_docs',
               json_encode($payload)
             );
+            
+            if (strpos($response['headers'], 'HTTP/1.1 201 Created') !== 0) {
+                throw new RuntimeException("Could not save objects.");
+            }
+            $errors = array();
+            $data = json_decode($response['body'], true);
+            foreach ($data AS $state) {
+                if (isset($state['error'])) {
+                    throw new RuntimeException("Could not save object '" . $state['id'] . "': " . $state['error'] . " - " . $state['reason']);
+                } else {
+                    $this->revisions[$state['id']] = $state['rev'];
+                }
+            }
         }
     }
 
@@ -157,10 +180,10 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
         $isRoot = empty($objects);
 
         if (!isset($objects[$id])) {
-            $response = $this->send('GET', '/' . $this->database . '/' . $id);
-
+            $response = $this->send('GET', '/' . $this->database . '/' . urlencode($id));
             if (strpos($response['headers'], 'HTTP/1.1 200 OK') === 0) {
                 $object = json_decode($response['body'], TRUE);
+                $this->revisions[$object['_id']] = $object['_rev'];
             } else {
                 throw new RuntimeException(
                   sprintf('Object with id "%s" could not be fetched.', $id)

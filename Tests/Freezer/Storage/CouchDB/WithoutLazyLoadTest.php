@@ -469,8 +469,6 @@ class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends Object_Freezer_
         $this->setUp(FALSE);
 
         $o = $this->storage->fetch($id);
-
-        $this->markTestIncomplete();
     }
 
     /**

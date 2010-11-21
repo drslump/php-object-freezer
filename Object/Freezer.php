@@ -227,7 +227,7 @@ class Object_Freezer
                     }
 
                     else if (is_object($v) &&
-                             !in_array(get_class($object), $this->blacklist)) {
+                             !in_array(get_class($v), $this->blacklist)) {
                         // Freeze the aggregated object.
                         $this->freeze($v, $objects);
 

@@ -129,13 +129,19 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
     {
         $payload = array('docs' => array());
 
-        foreach ($frozenObject['objects'] as $_id => $_object) {
-            if ($_object['isDirty'] !== FALSE) {
+        foreach ($frozenObject['objects'] as $id => $object) {
+            if ($object['isDirty'] !== FALSE) {
+                $revision = NULL;
+
+                if (isset($this->revisions[$id])) {
+                    $revision = $this->revisions[$id];
+                }
+
                 $data = array(
-                  '_id'   => $_id,
-                  '_rev'  => (isset($this->revisions[$_id])) ? $this->revisions[$_id] : NULL,
-                  'class' => $_object['className'],
-                  'state' => $_object['state']
+                  '_id'   => $id,
+                  '_rev'  => $revision,
+                  'class' => $object['className'],
+                  'state' => $object['state']
                 );
 
                 if (!$data['_rev']) {

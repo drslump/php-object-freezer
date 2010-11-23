@@ -77,6 +77,11 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
     protected $revisions = array();
 
     /**
+     * @var boolean
+     */
+    protected $debug = FALSE;
+
+    /**
      * Constructor.
      *
      * @param  string               $database
@@ -256,7 +261,13 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
                         $payload;
         }
 
-        fwrite($socket, $request . "\r\n");
+        $request .= "\r\n";
+
+        if ($this->debug) {
+            print $request;
+        }
+
+        fwrite($socket, $request);
 
         $buffer = '';
 
@@ -267,5 +278,23 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
         list($headers, $body) = explode("\r\n\r\n", $buffer);
 
         return array('headers' => $headers, 'body' => $body);
+    }
+
+    /**
+     * Sets the flag that controls whether or not debug messages are printed.
+     *
+     * @param  boolean $flag
+     * @throws InvalidArgumentException
+     */
+    public function setDebug($flag)
+    {
+        // Bail out if a non-boolean was passed.
+        if (!is_bool($flag)) {
+            throw Object_Freezer_Util::getInvalidArgumentException(
+              1, 'boolean'
+            );
+        }
+
+        $this->debug = $flag;
     }
 }

@@ -263,9 +263,11 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
 
         $request .= "\r\n";
 
+        // @codeCoverageIgnoreStart
         if ($this->debug) {
             print $request;
         }
+        // @codeCoverageIgnoreEnd
 
         fwrite($socket, $request);
 

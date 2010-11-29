@@ -538,4 +538,25 @@ class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends Object_Freezer_
 
         $storage->send('PUT', '/test');
     }
+
+    /**
+     * @covers Object_Freezer_Storage_CouchDB::setDebug
+     */
+    public function testDebugModeCanBeEnabled()
+    {
+        $storage = new Object_Freezer_Storage_CouchDB('test');
+        $storage->setDebug(TRUE);
+
+        $this->assertAttributeEquals(TRUE, 'debug', $storage);
+    }
+
+    /**
+     * @covers            Object_Freezer_Storage_CouchDB::setDebug
+     * @expectedException InvalidArgumentException
+     */
+    public function testExceptionIsThrownIfNotABooleanIsPassedAsFirstArgumentToSetDebug()
+    {
+        $storage = new Object_Freezer_Storage_CouchDB('test');
+        $storage->setDebug(NULL);
+    }
 }

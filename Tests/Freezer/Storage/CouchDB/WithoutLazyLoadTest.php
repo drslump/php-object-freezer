@@ -475,7 +475,7 @@ class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends Object_Freezer_
         $this->storage->store($o);
         $this->setUp(FALSE);
 
-        $o = $this->storage->fetch($id);
+        $this->assertEquals($o, $this->storage->fetch($id));
     }
 
     /**

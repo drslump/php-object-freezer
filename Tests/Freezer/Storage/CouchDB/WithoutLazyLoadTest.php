@@ -456,6 +456,13 @@ class Object_Freezer_Storage_CouchDB_WithoutLazyLoadTest extends Object_Freezer_
         $this->assertEquals($root, $this->storage->fetch('a'));
     }
 
+    /**
+     * @covers  Object_Freezer_Storage::store
+     * @covers  Object_Freezer_Storage::fetch
+     * @covers  Object_Freezer_Storage_CouchDB::doStore
+     * @covers  Object_Freezer_Storage_CouchDB::doFetch
+     * @depends testStoringAndFetchingAnObjectWorks
+     */
     public function testUpdatingAnObjectWorks()
     {
         $o  = new A(1, 2, 3);

@@ -168,8 +168,7 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
                 throw new RuntimeException('Could not save objects.');
             }
 
-            $errors = array();
-            $data   = json_decode($response['body'], true);
+            $data = json_decode($response['body'], TRUE);
 
             foreach ($data as $state) {
                 if (isset($state['error'])) {

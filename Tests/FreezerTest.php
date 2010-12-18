@@ -602,11 +602,11 @@ class Object_FreezerTest extends PHPUnit_Framework_TestCase
     {
         $freezer = new Object_Freezer;
 
-        $this->assertType(
+        $this->assertInstanceOf(
           'Object_Freezer_IdGenerator_UUID', $freezer->getIdGenerator()
         );
 
-        $this->assertType(
+        $this->assertInstanceOf(
           'Object_Freezer_HashGenerator_NonRecursiveSHA1', $freezer->getHashGenerator()
         );
 

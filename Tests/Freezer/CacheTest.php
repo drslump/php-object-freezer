@@ -74,7 +74,7 @@ class Object_Freezer_CacheTest extends PHPUnit_Framework_TestCase
      */
     public function testGet($cache)
     {
-        $this->assertType('StdClass', $cache->get('foo'));
+        $this->assertInstanceOf('StdClass', $cache->get('foo'));
     }
 
     /**

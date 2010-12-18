@@ -75,7 +75,7 @@ class Object_Freezer_StorageTest extends PHPUnit_Framework_TestCase
      */
     public function testConstructorWithDefaultArguments()
     {
-        $this->assertType(
+        $this->assertInstanceOf(
           'Object_Freezer', $this->readAttribute($this->stub, 'freezer')
         );
     }

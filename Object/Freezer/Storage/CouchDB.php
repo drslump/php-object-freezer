@@ -165,13 +165,16 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
             );
 
             if (strpos($response['headers'], 'HTTP/1.1 201 Created') !== 0) {
+                // @codeCoverageIgnoreStart
                 throw new RuntimeException('Could not save objects.');
+                // @codeCoverageIgnoreEnd
             }
 
             $data = json_decode($response['body'], TRUE);
 
             foreach ($data as $state) {
                 if (isset($state['error'])) {
+                    // @codeCoverageIgnoreStart
                     throw new RuntimeException(
                       sprintf(
                         'Could not save object "%s": %s - %s',
@@ -180,6 +183,7 @@ class Object_Freezer_Storage_CouchDB extends Object_Freezer_Storage
                         $state['reason']
                       )
                     );
+                    // @codeCoverageIgnoreEnd
                 } else {
                     $this->revisions[$state['id']] = $state['rev'];
                 }

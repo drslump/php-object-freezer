@@ -22,6 +22,7 @@
    <antcall target="pdepend"/>
    <antcall target="phpmd"/>
    <antcall target="phpcpd"/>
+   <antcall target="phploc"/>
    <antcall target="phpcs"/>
    <antcall target="phpdoc"/>
   </parallel>
@@ -48,6 +49,13 @@
  <target name="phpcpd">
   <exec executable="phpcpd">
    <arg line="--log-pmd ${basedir}/build/logs/pmd-cpd.xml Object" />
+  </exec>
+ </target>
+
+ <!-- Generate phploc.csv -->
+ <target name="phploc">
+  <exec executable="phploc">
+   <arg line="--log-csv ${basedir}/build/logs/phploc.csv Object" />
   </exec>
  </target>
 

@@ -370,9 +370,13 @@ class Object_Freezer
 
             foreach ($state as $name => $value) {
                 if (strpos($name, '__php_object_freezer') !== 0) {
-                    $attribute = $reflector->getProperty($name);
-                    $attribute->setAccessible(TRUE);
-                    $attribute->setValue($objects[$root], $value);
+                    if ($reflector->hasProperty($name)) {
+                        $attribute = $reflector->getProperty($name);
+                        $attribute->setAccessible(TRUE);
+                        $attribute->setValue($objects[$root], $value);
+                    } else {
+                        $objects[$root]->$name = $value;
+                    }
                 }
             }
 
